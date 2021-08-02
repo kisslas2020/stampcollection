@@ -5,7 +5,6 @@ import com.codecool.stampcollection.DTO.StampDTO;
 import com.codecool.stampcollection.assembler.StampModelAssembler;
 import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.service.StampService;
-import com.codecool.stampcollection.validator.YearOfIssueConstraint;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.validation.annotation.Validated;
@@ -40,18 +39,18 @@ public class StampController {
         return assembler.toModel(service.one(id));
     }
 
-    @GetMapping
+    @GetMapping("/country")
     public CollectionModel<EntityModel<StampDTO>> allByCountry(@RequestParam @NotBlank @Size(min = 3, max = 3,
             message = "Use three-letter Alpha-3 code.") String country) {
         return assembler.toCollectionModel(service.allByCountry(country));
     }
 
-    @GetMapping
+    @GetMapping("/year")
     public CollectionModel<EntityModel<StampDTO>> allByYear(@RequestParam Integer year) {
         return assembler.toCollectionModel(service.allByYear(year));
     }
 
-    @GetMapping
+    @GetMapping("/countryandyear")
     public CollectionModel<EntityModel<StampDTO>> allByCountryAndYear(@RequestParam @NotBlank @Size(min = 3, max = 3,
             message = "Use three-letter Alpha-3 code.") String country, @RequestParam Integer year) {
         return assembler.toCollectionModel(service.allByCountryAndYear(country, year));
