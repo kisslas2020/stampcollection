@@ -1,0 +1,65 @@
+package com.codecool.stampcollection.DTO;
+
+import com.codecool.stampcollection.model.Denomination;
+import com.codecool.stampcollection.validator.YearOfIssueConstraint;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Set;
+
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+public class StampDTO {
+
+    //private Long id;
+    private String name;
+    @NotBlank
+    @Size(min = 3, max = 3, message = "Use three-letter Alpha-3 code.")
+    private String country;
+    @YearOfIssueConstraint(message = "Year of issue must be between 1840 and current year.")
+    private Integer yearOfIssue;
+    //private Set<Denomination> denominations;
+
+
+
+    /*public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }*/
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Integer getYearOfIssue() {
+        return yearOfIssue;
+    }
+
+    public void setYearOfIssue(Integer yearOfIssue) {
+        this.yearOfIssue = yearOfIssue;
+    }
+
+    /*public Set<Denomination> getDenominations() {
+        return denominations;
+    }*/
+
+    /*public void setDenominations(Set<Denomination> denominations) {
+        this.denominations = denominations;
+    }*/
+}
