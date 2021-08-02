@@ -9,12 +9,14 @@ import com.codecool.stampcollection.service.DenominationService;
 import com.codecool.stampcollection.service.StampService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/denomination")
+@Validated
 public class DenominationController {
 
     private final DenominationService service;

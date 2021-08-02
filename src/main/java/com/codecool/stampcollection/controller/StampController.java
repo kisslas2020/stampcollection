@@ -5,14 +5,19 @@ import com.codecool.stampcollection.DTO.StampDTO;
 import com.codecool.stampcollection.assembler.StampModelAssembler;
 import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.service.StampService;
+import com.codecool.stampcollection.validator.YearOfIssueConstraint;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @RestController
 @RequestMapping("/api/stamp")
+@Validated
 public class StampController {
 
     private final StampService service;
@@ -33,6 +38,23 @@ public class StampController {
     @GetMapping("/{stamp_id}")
     public EntityModel<StampDTO> one(@PathVariable("stamp_id") Long id) {
         return assembler.toModel(service.one(id));
+    }
+
+    @GetMapping
+    public CollectionModel<EntityModel<StampDTO>> allByCountry(@RequestParam @NotBlank @Size(min = 3, max = 3,
+            message = "Use three-letter Alpha-3 code.") String country) {
+        return assembler.toCollectionModel(service.allByCountry(country));
+    }
+
+    @GetMapping
+    public CollectionModel<EntityModel<StampDTO>> allByYear(@RequestParam Integer year) {
+        return assembler.toCollectionModel(service.allByYear(year));
+    }
+
+    @GetMapping
+    public CollectionModel<EntityModel<StampDTO>> allByCountryAndYear(@RequestParam @NotBlank @Size(min = 3, max = 3,
+            message = "Use three-letter Alpha-3 code.") String country, @RequestParam Integer year) {
+        return assembler.toCollectionModel(service.allByCountryAndYear(country, year));
     }
 
     @PostMapping

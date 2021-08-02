@@ -1,20 +1,20 @@
 package com.codecool.stampcollection.controller;
 
 import com.codecool.stampcollection.DTO.DTOMapper;
-import com.codecool.stampcollection.DTO.StampDTO;
 import com.codecool.stampcollection.DTO.TransactionDTO;
 import com.codecool.stampcollection.assembler.TransactionModelAssembler;
-import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.model.Transaction;
 import com.codecool.stampcollection.service.TransactionService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/transaction")
+@Validated
 public class TransactionController {
 
     private final TransactionService service;
