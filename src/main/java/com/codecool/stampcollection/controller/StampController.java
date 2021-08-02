@@ -41,6 +41,15 @@ public class StampController {
         return assembler.toModel(service.save(stamp));
     }
 
+    @PutMapping("/{stamp_id}")
+    public EntityModel<StampDTO> update(@PathVariable("stamp_id") Long id, @Valid @RequestBody StampDTO stampDTO) {
+        Stamp stamp = service.one(id);
+        stamp.setYearOfIssue(stampDTO.getYearOfIssue());
+        stamp.setName(stampDTO.getName());
+        stamp.setCountry(stampDTO.getCountry());
+        return assembler.toModel(service.save(stamp));
+    }
+
     @DeleteMapping("/{stamp_id}")
     public void delete(@PathVariable("stamp_id") Long id) {
         service.delete(id);
