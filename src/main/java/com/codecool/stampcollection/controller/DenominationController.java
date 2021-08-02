@@ -1,7 +1,9 @@
 package com.codecool.stampcollection.controller;
 
+import com.codecool.stampcollection.DTO.DTOMapper;
 import com.codecool.stampcollection.DTO.DenominationDTO;
 import com.codecool.stampcollection.assembler.DenominationModelAssembler;
+import com.codecool.stampcollection.model.Denomination;
 import com.codecool.stampcollection.service.DenominationService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -15,10 +17,12 @@ public class DenominationController {
 
     private final DenominationService service;
     private final DenominationModelAssembler assembler;
+    private final DTOMapper dtoMapper;
 
-    public DenominationController(DenominationService service, DenominationModelAssembler assembler) {
+    public DenominationController(DenominationService service, DenominationModelAssembler assembler, DTOMapper dtoMapper) {
         this.service = service;
         this.assembler = assembler;
+        this.dtoMapper = dtoMapper;
     }
 
     @GetMapping("/{denom_id}")
@@ -33,8 +37,8 @@ public class DenominationController {
 
     @PostMapping
     public EntityModel<DenominationDTO> save(@Valid @RequestBody DenominationDTO denominationDTO) {
-        System.out.println(denominationDTO.getCurrency());
-        return assembler.toModel(service.save(denominationDTO));
+        Denomination denomination = dtoMapper.dtoToEntity(denominationDTO);
+        return assembler.toModel(service.save(denomination));
     }
 
     @DeleteMapping("/{denom_id}")

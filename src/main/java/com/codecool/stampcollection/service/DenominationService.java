@@ -16,35 +16,29 @@ import java.util.stream.Collectors;
 public class DenominationService {
 
     private final DenominationRepository repository;
-    private final ModelMapper modelMapper;
 
-    public DenominationService(DenominationRepository repository, ModelMapper modelMapper) {
+    public DenominationService(DenominationRepository repository) {
         this.repository = repository;
-        this.modelMapper = modelMapper;
     }
 
-    public DenominationDTO one(Long id) {
+    public Denomination one(Long id) {
         Denomination denomination = repository.findById(id).orElseThrow(() -> new DenominationNotFoundException(id));
-        return convertToDto(denomination);
+        return denomination;
     }
 
-    public List<DenominationDTO> all() {
-        return repository.findAll()
-                .stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+    public List<Denomination> all() {
+        return repository.findAll();
     }
 
-    public DenominationDTO save(DenominationDTO denominationDTO) {
-        Denomination denomination = convertToEntity(denominationDTO);
-        return convertToDto(repository.save(denomination));
+    public Denomination save(Denomination denomination) {
+        return repository.save(denomination);
     }
 
     public void delete(Long id) {
         repository.deleteById(id);
     }
 
-    private DenominationDTO convertToDto(Denomination denomination) {
+    /*private DenominationDTO convertToDto(Denomination denomination) {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE)
                 .setFieldMatchingEnabled(true)
@@ -58,5 +52,5 @@ public class DenominationService {
                 .setFieldMatchingEnabled(true)
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
         return modelMapper.map(denominationDTO, Denomination.class);
-    }
+    }*/
 }

@@ -16,36 +16,30 @@ import java.util.stream.Collectors;
 public class StampService {
 
     private final StampRepository repository;
-    private final ModelMapper modelMapper;
 
-    public StampService(StampRepository repository, ModelMapper modelMapper) {
+    public StampService(StampRepository repository) {
         this.repository = repository;
-        this.modelMapper = modelMapper;
     }
 
-    public List<StampDTO> findAll() {
-        return repository.findAll()
-                .stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+    public List<Stamp> findAll() {
+        return repository.findAll();
     }
 
-    public StampDTO one(Long id) {
+    public Stamp one(Long id) {
         Stamp stamp = repository.findById(id)
                 .orElseThrow(() -> new StampNotFoundException(id));
-        return convertToDto(stamp);
+        return stamp;
     }
 
-    public StampDTO save(StampDTO stampDTO) {
-        Stamp stamp = convertToEntity(stampDTO);
-        return convertToDto(repository.save(stamp));
+    public Stamp save(Stamp stamp) {
+        return repository.save(stamp);
     }
 
     public void delete(Long id) {
         repository.deleteById(id);
     }
 
-    private StampDTO convertToDto(Stamp stamp) {
+    /*private StampDTO convertToDto(Stamp stamp) {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.LOOSE)
                 .setFieldMatchingEnabled(true)
@@ -59,5 +53,5 @@ public class StampService {
                 .setFieldMatchingEnabled(true)
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
         return modelMapper.map(stampDTO, Stamp.class);
-    }
+    }*/
 }

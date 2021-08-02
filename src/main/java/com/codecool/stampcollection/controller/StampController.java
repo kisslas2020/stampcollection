@@ -1,7 +1,9 @@
 package com.codecool.stampcollection.controller;
 
+import com.codecool.stampcollection.DTO.DTOMapper;
 import com.codecool.stampcollection.DTO.StampDTO;
 import com.codecool.stampcollection.assembler.StampModelAssembler;
+import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.service.StampService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -15,10 +17,12 @@ public class StampController {
 
     private final StampService service;
     private final StampModelAssembler assembler;
+    private final DTOMapper dtoMapper;
 
-    public StampController(StampService service, StampModelAssembler assembler) {
+    public StampController(StampService service, StampModelAssembler assembler, DTOMapper dtoMapper) {
         this.service = service;
         this.assembler = assembler;
+        this.dtoMapper = dtoMapper;
     }
 
     @GetMapping
@@ -33,7 +37,8 @@ public class StampController {
 
     @PostMapping
     public EntityModel<StampDTO> save(@Valid @RequestBody StampDTO stampDTO) {
-        return assembler.toModel(service.save(stampDTO));
+        Stamp stamp = dtoMapper.dtoToEntity(stampDTO);
+        return assembler.toModel(service.save(stamp));
     }
 
     @DeleteMapping("/{stamp_id}")

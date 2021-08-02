@@ -1,7 +1,9 @@
 package com.codecool.stampcollection.controller;
 
+import com.codecool.stampcollection.DTO.DTOMapper;
 import com.codecool.stampcollection.DTO.TransactionDTO;
 import com.codecool.stampcollection.assembler.TransactionModelAssembler;
+import com.codecool.stampcollection.model.Transaction;
 import com.codecool.stampcollection.service.TransactionService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -15,10 +17,12 @@ public class TransactionController {
 
     private final TransactionService service;
     private final TransactionModelAssembler assembler;
+    private final DTOMapper dtoMapper;
 
-    public TransactionController(TransactionService service, TransactionModelAssembler assembler) {
+    public TransactionController(TransactionService service, TransactionModelAssembler assembler, DTOMapper dtoMapper) {
         this.service = service;
         this.assembler = assembler;
+        this.dtoMapper = dtoMapper;
     }
 
     @GetMapping("/{transaction_id}")
@@ -33,7 +37,8 @@ public class TransactionController {
 
     @PostMapping
     private EntityModel<TransactionDTO> save(@Valid @RequestBody TransactionDTO transactionDTO) {
-        return assembler.toModel(service.save(transactionDTO));
+        Transaction transaction = dtoMapper.dtoToEntity(transactionDTO);
+        return assembler.toModel(service.save(transaction));
     }
 
     @DeleteMapping("/{transaction_id}")

@@ -1,7 +1,9 @@
 package com.codecool.stampcollection.assembler;
 
+import com.codecool.stampcollection.DTO.DTOMapper;
 import com.codecool.stampcollection.DTO.StampDTO;
 import com.codecool.stampcollection.controller.StampController;
+import com.codecool.stampcollection.model.Stamp;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -15,17 +17,24 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-public class StampModelAssembler implements RepresentationModelAssembler<StampDTO, EntityModel<StampDTO>> {
+public class StampModelAssembler implements RepresentationModelAssembler<Stamp, EntityModel<StampDTO>> {
+
+    private final DTOMapper dtoMapper;
+
+    public StampModelAssembler(DTOMapper dtoMapper) {
+        this.dtoMapper = dtoMapper;
+    }
 
     @Override
-    public EntityModel<StampDTO> toModel(StampDTO entity) {
-        return EntityModel.of(entity,
+    public EntityModel<StampDTO> toModel(Stamp entity) {
+        StampDTO stampDTO = dtoMapper.entityToDto(entity);
+        return EntityModel.of(stampDTO,
                 linkTo(methodOn(StampController.class).one(entity.getId())).withSelfRel(),
                 linkTo(methodOn(StampController.class).all()).withRel("stamps"));
     }
 
     @Override
-    public CollectionModel<EntityModel<StampDTO>> toCollectionModel(Iterable<? extends StampDTO> entities) {
+    public CollectionModel<EntityModel<StampDTO>> toCollectionModel(Iterable<? extends Stamp> entities) {
         List<EntityModel<StampDTO>> stamps = StreamSupport.stream(entities.spliterator(), false)
                 .map(this::toModel)
                 .collect(Collectors.toList());

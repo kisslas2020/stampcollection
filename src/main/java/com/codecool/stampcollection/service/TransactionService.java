@@ -10,42 +10,35 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
 
     private final TransactionRepository repository;
-    private final ModelMapper modelMapper;
 
-    public TransactionService(TransactionRepository repository, ModelMapper modelMapper) {
+    public TransactionService(TransactionRepository repository) {
         this.repository = repository;
-        this.modelMapper = modelMapper;
     }
 
-    public TransactionDTO one(Long id) {
+    public Transaction one(Long id) {
         Transaction transaction = repository.findById(id)
                 .orElseThrow(() -> new TransactionNotFoundException(id));
-        return convertToDto(transaction);
+        return transaction;
     }
 
-    public List<TransactionDTO> all() {
-        return repository.findAll()
-                .stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+    public List<Transaction> all() {
+        return repository.findAll();
     }
 
-    public TransactionDTO save(TransactionDTO transactionDTO) {
-        Transaction transaction = convertToEntity(transactionDTO);
-        return convertToDto(repository.save(transaction));
+    public Transaction save(Transaction transaction) {
+        return repository.save(transaction);
     }
 
     public void delete(Long id) {
         repository.deleteById(id);
     }
 
-    private TransactionDTO convertToDto(Transaction transaction) {
+    /*private TransactionDTO convertToDto(Transaction transaction) {
         modelMapper.getConfiguration()
                 .setMatchingStrategy(MatchingStrategies.STANDARD)
                 .setFieldMatchingEnabled(true)
@@ -61,5 +54,5 @@ public class TransactionService {
                 .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
         Transaction transaction = modelMapper.map(transactionDTO, Transaction.class);
         return transaction;
-    }
+    }*/
 }

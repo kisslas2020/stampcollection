@@ -1,7 +1,9 @@
 package com.codecool.stampcollection.assembler;
 
+import com.codecool.stampcollection.DTO.DTOMapper;
 import com.codecool.stampcollection.DTO.DenominationDTO;
 import com.codecool.stampcollection.controller.DenominationController;
+import com.codecool.stampcollection.model.Denomination;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -15,17 +17,24 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-public class DenominationModelAssembler implements RepresentationModelAssembler<DenominationDTO, EntityModel<DenominationDTO>> {
+public class DenominationModelAssembler implements RepresentationModelAssembler<Denomination, EntityModel<DenominationDTO>> {
+
+    private final DTOMapper dtoMapper;
+
+    public DenominationModelAssembler(DTOMapper dtoMapper) {
+        this.dtoMapper = dtoMapper;
+    }
 
     @Override
-    public EntityModel<DenominationDTO> toModel(DenominationDTO entity) {
-        return EntityModel.of(entity,
+    public EntityModel<DenominationDTO> toModel(Denomination entity) {
+        DenominationDTO denominationDTO = dtoMapper.entityToDto(entity);
+        return EntityModel.of(denominationDTO,
                 linkTo(methodOn(DenominationController.class).one(entity.getId())).withSelfRel(),
                 linkTo(methodOn(DenominationController.class).all()).withRel("denominations"));
     }
 
     @Override
-    public CollectionModel<EntityModel<DenominationDTO>> toCollectionModel(Iterable<? extends DenominationDTO> entities) {
+    public CollectionModel<EntityModel<DenominationDTO>> toCollectionModel(Iterable<? extends Denomination> entities) {
         List<EntityModel<DenominationDTO>> denominations = StreamSupport.stream(entities.spliterator(), false)
                 .map(this::toModel)
                 .collect(Collectors.toList());
