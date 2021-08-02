@@ -3,6 +3,7 @@ package com.codecool.stampcollection.DTO;
 import com.codecool.stampcollection.model.Denomination;
 import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.model.Transaction;
+import com.codecool.stampcollection.service.DenominationService;
 import com.codecool.stampcollection.service.StampService;
 import org.springframework.stereotype.Component;
 
@@ -12,9 +13,11 @@ import java.util.stream.Collectors;
 public class DTOMapper {
 
     private final StampService stampService;
+    private final DenominationService denominationService;
 
-    public DTOMapper(StampService stampService) {
+    public DTOMapper(StampService stampService, DenominationService denominationService) {
         this.stampService = stampService;
+        this.denominationService = denominationService;
     }
 
 

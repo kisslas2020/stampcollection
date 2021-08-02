@@ -43,6 +43,11 @@ public class StampService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        Stamp stamp = repository.findById(id).orElseThrow(() -> new StampNotFoundException(id));
+        if (stamp.getDenominations().size() == 0) {
+            repository.deleteById(id);
+        } else {
+            throw new UnsupportedOperationException("you cannot delete stamp with active denominations");
+        }
     }
 }

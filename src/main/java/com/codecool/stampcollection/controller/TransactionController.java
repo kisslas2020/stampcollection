@@ -38,7 +38,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    private EntityModel<TransactionDTO> save(@Valid @RequestBody TransactionDTO transactionDTO) {
+    public EntityModel<TransactionDTO> save(@Valid @RequestBody TransactionDTO transactionDTO) {
         Transaction transaction = dtoMapper.dtoToEntity(transactionDTO);
         return assembler.toModel(service.save(transaction));
     }

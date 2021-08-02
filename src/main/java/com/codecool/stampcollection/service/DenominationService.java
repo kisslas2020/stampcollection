@@ -3,6 +3,7 @@ package com.codecool.stampcollection.service;
 import com.codecool.stampcollection.exception.DenominationNotFoundException;
 import com.codecool.stampcollection.model.Denomination;
 import com.codecool.stampcollection.repository.DenominationRepository;
+import com.codecool.stampcollection.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +31,12 @@ public class DenominationService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        Denomination denomination = repository.findById(id).orElseThrow(() -> new DenominationNotFoundException(id));
+        if (denomination.getStock() == 0) {
+            repository.deleteById(id);
+        } else {
+            throw new UnsupportedOperationException("Cannot delete denomination with activ stock value");
+        }
     }
 
 }

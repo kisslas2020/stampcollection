@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 
 @RestController
 @RequestMapping("/api/stamp")
@@ -59,6 +60,7 @@ public class StampController {
     @PostMapping
     public EntityModel<StampDTO> save(@Valid @RequestBody StampDTO stampDTO) {
         Stamp stamp = dtoMapper.dtoToEntity(stampDTO);
+        stamp.setDenominations(new HashSet<>());
         return assembler.toModel(service.save(stamp));
     }
 
