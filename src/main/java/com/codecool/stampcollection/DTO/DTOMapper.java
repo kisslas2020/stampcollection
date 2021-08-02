@@ -6,6 +6,8 @@ import com.codecool.stampcollection.model.Transaction;
 import com.codecool.stampcollection.service.StampService;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class DTOMapper {
 
@@ -21,6 +23,9 @@ public class DTOMapper {
         stampDTO.setCountry(stamp.getCountry());
         stampDTO.setName(stamp.getName());
         stampDTO.setYearOfIssue(stamp.getYearOfIssue());
+        stampDTO.setDenominations(stamp.getDenominations().stream()
+                .map(d -> d.getValue())
+                .collect(Collectors.toSet()));
         return stampDTO;
     }
     public Stamp dtoToEntity(StampDTO stampDTO) {
