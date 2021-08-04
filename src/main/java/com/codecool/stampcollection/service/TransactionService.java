@@ -64,6 +64,7 @@ public class TransactionService {
         switch (transaction.getTransactionType()) {
             case BUY:
                 signedQuantity = transaction.getQuantity();
+                break;
             case SELL:
                 signedQuantity = transaction.getQuantity() * (-1);
         }

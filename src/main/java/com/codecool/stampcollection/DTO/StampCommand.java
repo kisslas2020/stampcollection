@@ -51,4 +51,6 @@ public class StampCommand {
     public void setDenominations(Set<Double> denominations) {
         this.denominations = denominations;
     }
+
+
 }

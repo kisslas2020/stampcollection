@@ -17,7 +17,8 @@ public class DenominationService {
     }
 
     public Denomination findById(Long id) {
-        Denomination denomination = repository.findById(id).orElseThrow(() -> new DenominationNotFoundException(id));
+        Denomination denomination = repository.findById(id)
+                .orElseThrow(() -> new DenominationNotFoundException(id));
         return denomination;
     }
 

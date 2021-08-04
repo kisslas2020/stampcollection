@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class StampNotFoundAdvice extends ResponseEntityExceptionHandler {
 
     @ResponseBody
-    @ExceptionHandler
+    @ExceptionHandler(StampNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String stampNotFoundHandler(StampNotFoundException ex) {
         return ex.getMessage();

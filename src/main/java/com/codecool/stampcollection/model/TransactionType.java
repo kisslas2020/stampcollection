@@ -2,5 +2,11 @@ package com.codecool.stampcollection.model;
 
 public enum TransactionType {
 
-    BUY, SELL
+    BUY("BUY"), SELL("SELL");
+
+    private final String name;
+
+    TransactionType(String name) {
+        this.name = name;
+    }
 }

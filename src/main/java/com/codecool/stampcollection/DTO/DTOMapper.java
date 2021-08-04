@@ -20,6 +20,7 @@ public class DTOMapper {
 
     public StampDTO entityToDto(Stamp stamp) {
         StampDTO stampDTO = new StampDTO();
+        stampDTO.setId(stamp.getId());
         stampDTO.setCountry(stamp.getCountry());
         stampDTO.setName(stamp.getName());
         stampDTO.setYearOfIssue(stamp.getYearOfIssue());
@@ -39,9 +40,11 @@ public class DTOMapper {
 
     public DenominationDTO entityToDto(Denomination denomination) {
         DenominationDTO denominationDTO = new DenominationDTO();
+        denominationDTO.setId(denomination.getId());
         denominationDTO.setCurrency(denomination.getCurrency());
         denominationDTO.setValue(denomination.getValue());
         denominationDTO.setStampId(denomination.getStamp().getId());
+        denominationDTO.setStock(denomination.getStock());
         return denominationDTO;
     }
     public Denomination dtoToEntity(DenominationCommand command) {
@@ -55,6 +58,7 @@ public class DTOMapper {
 
     public TransactionDTO entityToDto(Transaction transaction) {
         TransactionDTO transactionDTO = new TransactionDTO();
+        transactionDTO.setId(transaction.getId());
         transactionDTO.setDateOfTransaction(transaction.getDateOfTransaction());
         transactionDTO.setTransactionType(transaction.getTransactionType());
         transactionDTO.setDenomId(transaction.getDenomId());
