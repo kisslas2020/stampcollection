@@ -4,21 +4,16 @@ import com.codecool.stampcollection.model.TransactionType;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "dateOfTransaction")
 public class TransactionDTO {
 
     private Long id;
-    @PastOrPresent
     private LocalDate dateOfTransaction;
     private TransactionType transactionType;
     private Long denomId;
-    @Positive
     private Long quantity;
-    @Positive
     private Double unitPrice;
 
     public Long getId() {

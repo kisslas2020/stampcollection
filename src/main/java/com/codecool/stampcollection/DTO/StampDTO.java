@@ -1,23 +1,16 @@
 package com.codecool.stampcollection.DTO;
 
-import com.codecool.stampcollection.validator.YearOfIssueConstraint;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Set;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
 public class StampDTO {
 
     private Long id;
-    @NotBlank
     private String name;
-    @NotBlank
-    @Size(min = 3, max = 3, message = "Use three-letter Alpha-3 code.")
     private String country;
-    @YearOfIssueConstraint(message = "Year of issue must be between 1840 and current year.")
     private Integer yearOfIssue;
     private Set<Double> denominations;
 
