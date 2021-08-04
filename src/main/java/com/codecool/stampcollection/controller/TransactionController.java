@@ -1,6 +1,7 @@
 package com.codecool.stampcollection.controller;
 
 import com.codecool.stampcollection.DTO.DTOMapper;
+import com.codecool.stampcollection.DTO.TransactionCommand;
 import com.codecool.stampcollection.DTO.TransactionDTO;
 import com.codecool.stampcollection.assembler.TransactionModelAssembler;
 import com.codecool.stampcollection.model.Transaction;
@@ -40,19 +41,19 @@ public class TransactionController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<TransactionDTO> addNew(@Valid @RequestBody TransactionDTO transactionDTO) {
-        Transaction transaction = dtoMapper.dtoToEntity(transactionDTO);
+    public EntityModel<TransactionDTO> addNew(@Valid @RequestBody TransactionCommand command) {
+        Transaction transaction = dtoMapper.dtoToEntity(command);
         return assembler.toModel(service.addNew(transaction));
     }
 
     @PutMapping("/{transaction_id}")
-    public EntityModel<TransactionDTO> update(@PathVariable("transaction_id") Long id, @Valid @RequestBody TransactionDTO transactionDTO) {
+    public EntityModel<TransactionDTO> update(@PathVariable("transaction_id") Long id, @Valid @RequestBody TransactionCommand command) {
         Transaction transaction = service.findById(id);
-        transaction.setTransactionType(transactionDTO.getTransactionType());
-        transaction.setDateOfTransaction(transactionDTO.getDateOfTransaction());
-        transaction.setUnitPrice(transactionDTO.getUnitPrice());
-        transaction.setQuantity(transactionDTO.getQuantity());
-        transaction.setDenomId(transactionDTO.getDenomId());
+        transaction.setTransactionType(command.getTransactionType());
+        transaction.setDateOfTransaction(command.getDateOfTransaction());
+        transaction.setUnitPrice(command.getUnitPrice());
+        transaction.setQuantity(command.getQuantity());
+        transaction.setDenomId(command.getDenomId());
         return assembler.toModel(service.addNew(transaction));
     }
 

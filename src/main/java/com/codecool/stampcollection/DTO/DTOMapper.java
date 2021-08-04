@@ -28,11 +28,12 @@ public class DTOMapper {
                 .collect(Collectors.toSet()));
         return stampDTO;
     }
-    public Stamp dtoToEntity(StampDTO stampDTO) {
+
+    public Stamp dtoToEntity(StampCommand command) {
         Stamp stamp = new Stamp();
-        stamp.setCountry(stampDTO.getCountry());
-        stamp.setName(stampDTO.getName());
-        stamp.setYearOfIssue(stampDTO.getYearOfIssue());
+        stamp.setCountry(command.getCountry());
+        stamp.setName(command.getName());
+        stamp.setYearOfIssue(command.getYearOfIssue());
         return stamp;
     }
 
@@ -43,11 +44,11 @@ public class DTOMapper {
         denominationDTO.setStampId(denomination.getStamp().getId());
         return denominationDTO;
     }
-    public Denomination dtoToEntity(DenominationDTO denominationDTO) {
+    public Denomination dtoToEntity(DenominationCommand command) {
         Denomination denomination = new Denomination();
-        denomination.setCurrency(denominationDTO.getCurrency());
-        denomination.setValue(denominationDTO.getValue());
-        Stamp stamp = stampService.findById(denominationDTO.getStampId());
+        denomination.setCurrency(command.getCurrency());
+        denomination.setValue(command.getValue());
+        Stamp stamp = stampService.findById(command.getStampId());
         denomination.setStamp(stamp);
         return denomination;
     }
@@ -61,13 +62,13 @@ public class DTOMapper {
         transactionDTO.setUnitPrice(transaction.getUnitPrice());
         return transactionDTO;
     }
-    public Transaction dtoToEntity(TransactionDTO transactionDTO) {
+    public Transaction dtoToEntity(TransactionCommand command) {
         Transaction transaction = new Transaction();
-        transaction.setDateOfTransaction(transactionDTO.getDateOfTransaction());
-        transaction.setTransactionType(transactionDTO.getTransactionType());
-        transaction.setDenomId(transactionDTO.getDenomId());
-        transaction.setQuantity(transactionDTO.getQuantity());
-        transaction.setUnitPrice(transactionDTO.getUnitPrice());
+        transaction.setDateOfTransaction(command.getDateOfTransaction());
+        transaction.setTransactionType(command.getTransactionType());
+        transaction.setDenomId(command.getDenomId());
+        transaction.setQuantity(command.getQuantity());
+        transaction.setUnitPrice(command.getUnitPrice());
         return transaction;
     }
 }

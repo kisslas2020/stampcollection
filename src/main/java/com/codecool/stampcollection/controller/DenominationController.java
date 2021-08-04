@@ -1,6 +1,7 @@
 package com.codecool.stampcollection.controller;
 
 import com.codecool.stampcollection.DTO.DTOMapper;
+import com.codecool.stampcollection.DTO.DenominationCommand;
 import com.codecool.stampcollection.DTO.DenominationDTO;
 import com.codecool.stampcollection.assembler.DenominationModelAssembler;
 import com.codecool.stampcollection.exception.DenominationNotFoundException;
@@ -50,17 +51,17 @@ public class DenominationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<DenominationDTO> addNew(@Valid @RequestBody DenominationDTO denominationDTO) {
-        Denomination denomination = dtoMapper.dtoToEntity(denominationDTO);
+    public EntityModel<DenominationDTO> addNew(@Valid @RequestBody DenominationCommand command) {
+        Denomination denomination = dtoMapper.dtoToEntity(command);
         return assembler.toModel(service.addNew(denomination));
     }
 
     @PutMapping("/{denom_id}")
-    public EntityModel<DenominationDTO> update(@PathVariable("denom_id") Long id, @Valid @RequestBody DenominationDTO denominationDTO) {
+    public EntityModel<DenominationDTO> update(@PathVariable("denom_id") Long id, @Valid @RequestBody DenominationCommand command) {
         Denomination denomination = service.findById(id);
-        denomination.setValue(denominationDTO.getValue());
-        denomination.setCurrency(denominationDTO.getCurrency());
-        Stamp stamp = stampService.findById(denominationDTO.getStampId());
+        denomination.setValue(command.getValue());
+        denomination.setCurrency(command.getCurrency());
+        Stamp stamp = stampService.findById(command.getStampId());
         denomination.setStamp(stamp);
         return assembler.toModel(service.addNew(denomination));
     }

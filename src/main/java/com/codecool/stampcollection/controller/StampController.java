@@ -1,6 +1,7 @@
 package com.codecool.stampcollection.controller;
 
 import com.codecool.stampcollection.DTO.DTOMapper;
+import com.codecool.stampcollection.DTO.StampCommand;
 import com.codecool.stampcollection.DTO.StampDTO;
 import com.codecool.stampcollection.assembler.StampModelAssembler;
 import com.codecool.stampcollection.model.Stamp;
@@ -60,18 +61,18 @@ public class StampController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<StampDTO> addNew(@Valid @RequestBody StampDTO stampDTO) {
-        Stamp stamp = dtoMapper.dtoToEntity(stampDTO);
+    public EntityModel<StampDTO> addNew(@Valid @RequestBody StampCommand command) {
+        Stamp stamp = dtoMapper.dtoToEntity(command);
         stamp.setDenominations(new HashSet<>());
         return assembler.toModel(service.addNew(stamp));
     }
 
     @PutMapping("/{stamp_id}")
-    public EntityModel<StampDTO> update(@PathVariable("stamp_id") Long id, @Valid @RequestBody StampDTO stampDTO) {
+    public EntityModel<StampDTO> update(@PathVariable("stamp_id") Long id, @Valid @RequestBody StampCommand command) {
         Stamp stamp = service.findById(id);
-        stamp.setYearOfIssue(stampDTO.getYearOfIssue());
-        stamp.setName(stampDTO.getName());
-        stamp.setCountry(stampDTO.getCountry());
+        stamp.setYearOfIssue(command.getYearOfIssue());
+        stamp.setName(command.getName());
+        stamp.setCountry(command.getCountry());
         return assembler.toModel(service.addNew(stamp));
     }
 
