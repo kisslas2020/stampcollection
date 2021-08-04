@@ -7,6 +7,7 @@ import com.codecool.stampcollection.model.Transaction;
 import com.codecool.stampcollection.service.TransactionService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,7 @@ public class TransactionController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<TransactionDTO> save(@Valid @RequestBody TransactionDTO transactionDTO) {
         Transaction transaction = dtoMapper.dtoToEntity(transactionDTO);
         return assembler.toModel(service.save(transaction));
@@ -55,6 +57,7 @@ public class TransactionController {
     }
 
     @DeleteMapping("/{transaction_id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("transaction_id") Long id) {
         service.delete(id);
     }

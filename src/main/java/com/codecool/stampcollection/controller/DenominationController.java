@@ -49,6 +49,7 @@ public class DenominationController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<DenominationDTO> save(@Valid @RequestBody DenominationDTO denominationDTO) {
         Denomination denomination = dtoMapper.dtoToEntity(denominationDTO);
         return assembler.toModel(service.save(denomination));
@@ -65,6 +66,7 @@ public class DenominationController {
     }
 
     @DeleteMapping("/{denom_id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("denom_id") Long id) {
         service.delete(id);
     }

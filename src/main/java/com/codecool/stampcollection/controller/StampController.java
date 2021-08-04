@@ -7,6 +7,7 @@ import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.service.StampService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +59,7 @@ public class StampController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<StampDTO> save(@Valid @RequestBody StampDTO stampDTO) {
         Stamp stamp = dtoMapper.dtoToEntity(stampDTO);
         stamp.setDenominations(new HashSet<>());
@@ -74,6 +76,7 @@ public class StampController {
     }
 
     @DeleteMapping("/{stamp_id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("stamp_id") Long id) {
         service.delete(id);
     }
