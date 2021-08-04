@@ -3,7 +3,6 @@ package com.codecool.stampcollection.service;
 import com.codecool.stampcollection.exception.DenominationNotFoundException;
 import com.codecool.stampcollection.model.Denomination;
 import com.codecool.stampcollection.repository.DenominationRepository;
-import com.codecool.stampcollection.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,20 +16,20 @@ public class DenominationService {
         this.repository = repository;
     }
 
-    public Denomination one(Long id) {
+    public Denomination findById(Long id) {
         Denomination denomination = repository.findById(id).orElseThrow(() -> new DenominationNotFoundException(id));
         return denomination;
     }
 
-    public List<Denomination> all() {
+    public List<Denomination> findAll() {
         return repository.findAll();
     }
 
-    public Denomination save(Denomination denomination) {
+    public Denomination addNew(Denomination denomination) {
         return repository.save(denomination);
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         Denomination denomination = repository.findById(id).orElseThrow(() -> new DenominationNotFoundException(id));
         if (denomination.getStock() == 0) {
             repository.deleteById(id);

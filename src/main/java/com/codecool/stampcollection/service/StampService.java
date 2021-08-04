@@ -20,29 +20,29 @@ public class StampService {
         return repository.findAll();
     }
 
-    public Stamp one(Long id) {
+    public Stamp findById(Long id) {
         Stamp stamp = repository.findById(id)
                 .orElseThrow(() -> new StampNotFoundException(id));
         return stamp;
     }
 
-    public List<Stamp> allByCountry(String country) {
+    public List<Stamp> findAllByCountry(String country) {
         return repository.findAllByCountry(country);
     }
 
-    public List<Stamp> allByYear(Integer year) {
+    public List<Stamp> findAllByYear(Integer year) {
         return repository.findAllByYearOfIssue(year);
     }
 
-    public List<Stamp> allByCountryAndYear(String country, Integer year) {
+    public List<Stamp> findAllByCountryAndYear(String country, Integer year) {
         return repository.findAllByCountryAndYearOfIssue(country, year);
     }
 
-    public Stamp save(Stamp stamp) {
+    public Stamp addNew(Stamp stamp) {
         return repository.save(stamp);
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         Stamp stamp = repository.findById(id).orElseThrow(() -> new StampNotFoundException(id));
         if (stamp.getDenominations().size() == 0) {
             repository.deleteById(id);

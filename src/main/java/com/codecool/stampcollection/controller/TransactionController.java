@@ -29,37 +29,37 @@ public class TransactionController {
     }
 
     @GetMapping("/{transaction_id}")
-    public EntityModel<TransactionDTO> one(@PathVariable("transaction_id") Long id) {
-        return assembler.toModel(service.one(id));
+    public EntityModel<TransactionDTO> findById(@PathVariable("transaction_id") Long id) {
+        return assembler.toModel(service.findById(id));
     }
 
     @GetMapping
-    public CollectionModel<EntityModel<TransactionDTO>> all() {
-        return assembler.toCollectionModel(service.all());
+    public CollectionModel<EntityModel<TransactionDTO>> findAll() {
+        return assembler.toCollectionModel(service.findAll());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<TransactionDTO> save(@Valid @RequestBody TransactionDTO transactionDTO) {
+    public EntityModel<TransactionDTO> addNew(@Valid @RequestBody TransactionDTO transactionDTO) {
         Transaction transaction = dtoMapper.dtoToEntity(transactionDTO);
-        return assembler.toModel(service.save(transaction));
+        return assembler.toModel(service.addNew(transaction));
     }
 
     @PutMapping("/{transaction_id}")
     public EntityModel<TransactionDTO> update(@PathVariable("transaction_id") Long id, @Valid @RequestBody TransactionDTO transactionDTO) {
-        Transaction transaction = service.one(id);
+        Transaction transaction = service.findById(id);
         transaction.setTransactionType(transactionDTO.getTransactionType());
         transaction.setDateOfTransaction(transactionDTO.getDateOfTransaction());
         transaction.setUnitPrice(transactionDTO.getUnitPrice());
         transaction.setQuantity(transactionDTO.getQuantity());
         transaction.setDenomId(transactionDTO.getDenomId());
-        return assembler.toModel(service.save(transaction));
+        return assembler.toModel(service.addNew(transaction));
     }
 
     @DeleteMapping("/{transaction_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("transaction_id") Long id) {
-        service.delete(id);
+    public void deleteById(@PathVariable("transaction_id") Long id) {
+        service.deleteById(id);
     }
 
 

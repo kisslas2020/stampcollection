@@ -3,7 +3,6 @@ package com.codecool.stampcollection.DTO;
 import com.codecool.stampcollection.model.Denomination;
 import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.model.Transaction;
-import com.codecool.stampcollection.service.DenominationService;
 import com.codecool.stampcollection.service.StampService;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +47,7 @@ public class DTOMapper {
         Denomination denomination = new Denomination();
         denomination.setCurrency(denominationDTO.getCurrency());
         denomination.setValue(denominationDTO.getValue());
-        Stamp stamp = stampService.one(denominationDTO.getStampId());
+        Stamp stamp = stampService.findById(denominationDTO.getStampId());
         denomination.setStamp(stamp);
         return denomination;
     }

@@ -1,6 +1,5 @@
 package com.codecool.stampcollection.service;
 
-import com.codecool.stampcollection.exception.DenominationNotFoundException;
 import com.codecool.stampcollection.exception.TransactionNotFoundException;
 import com.codecool.stampcollection.model.Denomination;
 import com.codecool.stampcollection.model.Transaction;
@@ -21,17 +20,17 @@ public class TransactionService {
         this.denominationRepository = denominationRepository;
     }
 
-    public Transaction one(Long id) {
+    public Transaction findById(Long id) {
         Transaction transaction = repository.findById(id)
                 .orElseThrow(() -> new TransactionNotFoundException(id));
         return transaction;
     }
 
-    public List<Transaction> all() {
+    public List<Transaction> findAll() {
         return repository.findAll();
     }
 
-    public Transaction save(Transaction transaction) {
+    public Transaction addNew(Transaction transaction) {
         Long denomId = transaction.getDenomId();
         Denomination denomination = denominationRepository.findById(denomId)
                 .orElseThrow(() -> new UnsupportedOperationException("non-existent denominations cannot be purchased"));
@@ -45,7 +44,7 @@ public class TransactionService {
         return repository.save(transaction);
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         Transaction transaction = repository.findById(id).orElseThrow(() -> new TransactionNotFoundException(id));
         Long denomId = transaction.getDenomId();
         Denomination denomination = denominationRepository.findById(denomId)

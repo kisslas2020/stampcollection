@@ -29,8 +29,8 @@ public class TransactionModelAssembler implements RepresentationModelAssembler<T
     public EntityModel<TransactionDTO> toModel(Transaction entity) {
         TransactionDTO transactionDTO = dtoMapper.entityToDto(entity);
         return EntityModel.of(transactionDTO,
-                linkTo(methodOn(TransactionController.class).one(entity.getId())).withSelfRel(),
-                linkTo(methodOn(TransactionController.class).all()).withRel("transactions"));
+                linkTo(methodOn(TransactionController.class).findById(entity.getId())).withSelfRel(),
+                linkTo(methodOn(TransactionController.class).findAll()).withRel("transactions"));
     }
 
     @Override
@@ -39,6 +39,6 @@ public class TransactionModelAssembler implements RepresentationModelAssembler<T
                 .map(this::toModel)
                 .collect(Collectors.toList());
 
-        return CollectionModel.of(transactions, linkTo(methodOn(TransactionController.class).all()).withSelfRel());
+        return CollectionModel.of(transactions, linkTo(methodOn(TransactionController.class).findAll()).withSelfRel());
     }
 }

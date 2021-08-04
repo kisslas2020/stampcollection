@@ -39,36 +39,36 @@ public class DenominationController {
     }
 
     @GetMapping("/{denom_id}")
-    public EntityModel<DenominationDTO> one(@PathVariable("denom_id") Long id) {
-        return assembler.toModel(service.one(id));
+    public EntityModel<DenominationDTO> findById(@PathVariable("denom_id") Long id) {
+        return assembler.toModel(service.findById(id));
     }
 
     @GetMapping
-    public CollectionModel<EntityModel<DenominationDTO>> all() {
-        return assembler.toCollectionModel(service.all());
+    public CollectionModel<EntityModel<DenominationDTO>> findAll() {
+        return assembler.toCollectionModel(service.findAll());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<DenominationDTO> save(@Valid @RequestBody DenominationDTO denominationDTO) {
+    public EntityModel<DenominationDTO> addNew(@Valid @RequestBody DenominationDTO denominationDTO) {
         Denomination denomination = dtoMapper.dtoToEntity(denominationDTO);
-        return assembler.toModel(service.save(denomination));
+        return assembler.toModel(service.addNew(denomination));
     }
 
     @PutMapping("/{denom_id}")
     public EntityModel<DenominationDTO> update(@PathVariable("denom_id") Long id, @Valid @RequestBody DenominationDTO denominationDTO) {
-        Denomination denomination = service.one(id);
+        Denomination denomination = service.findById(id);
         denomination.setValue(denominationDTO.getValue());
         denomination.setCurrency(denominationDTO.getCurrency());
-        Stamp stamp = stampService.one(denominationDTO.getStampId());
+        Stamp stamp = stampService.findById(denominationDTO.getStampId());
         denomination.setStamp(stamp);
-        return assembler.toModel(service.save(denomination));
+        return assembler.toModel(service.addNew(denomination));
     }
 
     @DeleteMapping("/{denom_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("denom_id") Long id) {
-        service.delete(id);
+    public void deleteById(@PathVariable("denom_id") Long id) {
+        service.deleteById(id);
     }
 
     @ExceptionHandler(DenominationNotFoundException.class)

@@ -29,8 +29,8 @@ public class DenominationModelAssembler implements RepresentationModelAssembler<
     public EntityModel<DenominationDTO> toModel(Denomination entity) {
         DenominationDTO denominationDTO = dtoMapper.entityToDto(entity);
         return EntityModel.of(denominationDTO,
-                linkTo(methodOn(DenominationController.class).one(entity.getId())).withSelfRel(),
-                linkTo(methodOn(DenominationController.class).all()).withRel("denominations"));
+                linkTo(methodOn(DenominationController.class).findById(entity.getId())).withSelfRel(),
+                linkTo(methodOn(DenominationController.class).findAll()).withRel("denominations"));
     }
 
     @Override
@@ -39,6 +39,6 @@ public class DenominationModelAssembler implements RepresentationModelAssembler<
                 .map(this::toModel)
                 .collect(Collectors.toList());
 
-        return CollectionModel.of(denominations, linkTo(methodOn(DenominationController.class).all()).withSelfRel());
+        return CollectionModel.of(denominations, linkTo(methodOn(DenominationController.class).findAll()).withSelfRel());
     }
 }

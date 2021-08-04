@@ -32,52 +32,52 @@ public class StampController {
     }
 
     @GetMapping
-    public CollectionModel<EntityModel<StampDTO>> all() {
+    public CollectionModel<EntityModel<StampDTO>> findAll() {
         return assembler.toCollectionModel(service.findAll());
     }
 
     @GetMapping("/{stamp_id}")
-    public EntityModel<StampDTO> one(@PathVariable("stamp_id") Long id) {
-        return assembler.toModel(service.one(id));
+    public EntityModel<StampDTO> findById(@PathVariable("stamp_id") Long id) {
+        return assembler.toModel(service.findById(id));
     }
 
     @GetMapping("/country")
-    public CollectionModel<EntityModel<StampDTO>> allByCountry(@RequestParam @NotBlank @Size(min = 3, max = 3,
+    public CollectionModel<EntityModel<StampDTO>> findAllByCountry(@RequestParam @NotBlank @Size(min = 3, max = 3,
             message = "Use three-letter Alpha-3 code.") String country) {
-        return assembler.toCollectionModel(service.allByCountry(country));
+        return assembler.toCollectionModel(service.findAllByCountry(country));
     }
 
     @GetMapping("/year")
-    public CollectionModel<EntityModel<StampDTO>> allByYear(@RequestParam Integer year) {
-        return assembler.toCollectionModel(service.allByYear(year));
+    public CollectionModel<EntityModel<StampDTO>> findAllByYear(@RequestParam Integer year) {
+        return assembler.toCollectionModel(service.findAllByYear(year));
     }
 
     @GetMapping("/countryandyear")
-    public CollectionModel<EntityModel<StampDTO>> allByCountryAndYear(@RequestParam @NotBlank @Size(min = 3, max = 3,
+    public CollectionModel<EntityModel<StampDTO>> findAllByCountryAndYear(@RequestParam @NotBlank @Size(min = 3, max = 3,
             message = "Use three-letter Alpha-3 code.") String country, @RequestParam Integer year) {
-        return assembler.toCollectionModel(service.allByCountryAndYear(country, year));
+        return assembler.toCollectionModel(service.findAllByCountryAndYear(country, year));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<StampDTO> save(@Valid @RequestBody StampDTO stampDTO) {
+    public EntityModel<StampDTO> addNew(@Valid @RequestBody StampDTO stampDTO) {
         Stamp stamp = dtoMapper.dtoToEntity(stampDTO);
         stamp.setDenominations(new HashSet<>());
-        return assembler.toModel(service.save(stamp));
+        return assembler.toModel(service.addNew(stamp));
     }
 
     @PutMapping("/{stamp_id}")
     public EntityModel<StampDTO> update(@PathVariable("stamp_id") Long id, @Valid @RequestBody StampDTO stampDTO) {
-        Stamp stamp = service.one(id);
+        Stamp stamp = service.findById(id);
         stamp.setYearOfIssue(stampDTO.getYearOfIssue());
         stamp.setName(stampDTO.getName());
         stamp.setCountry(stampDTO.getCountry());
-        return assembler.toModel(service.save(stamp));
+        return assembler.toModel(service.addNew(stamp));
     }
 
     @DeleteMapping("/{stamp_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("stamp_id") Long id) {
-        service.delete(id);
+    public void deleteById(@PathVariable("stamp_id") Long id) {
+        service.deleteById(id);
     }
 }

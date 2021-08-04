@@ -29,8 +29,8 @@ public class StampModelAssembler implements RepresentationModelAssembler<Stamp, 
     public EntityModel<StampDTO> toModel(Stamp entity) {
         StampDTO stampDTO = dtoMapper.entityToDto(entity);
         return EntityModel.of(stampDTO,
-                linkTo(methodOn(StampController.class).one(entity.getId())).withSelfRel(),
-                linkTo(methodOn(StampController.class).all()).withRel("stamps"));
+                linkTo(methodOn(StampController.class).findById(entity.getId())).withSelfRel(),
+                linkTo(methodOn(StampController.class).findAll()).withRel("stamps"));
     }
 
     @Override
@@ -39,6 +39,6 @@ public class StampModelAssembler implements RepresentationModelAssembler<Stamp, 
                 .map(this::toModel)
                 .collect(Collectors.toList());
 
-        return CollectionModel.of(stamps, linkTo(methodOn(StampController.class).all()).withSelfRel());
+        return CollectionModel.of(stamps, linkTo(methodOn(StampController.class).findAll()).withSelfRel());
     }
 }
