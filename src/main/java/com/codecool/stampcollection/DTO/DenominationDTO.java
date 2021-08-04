@@ -10,7 +10,7 @@ import java.util.Currency;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "value")
 public class DenominationDTO {
 
-    //private Long id;
+    private Long id;
     @Positive
     private Double value;
     private Currency currency;
@@ -20,13 +20,13 @@ public class DenominationDTO {
 
 
 
-    /*public Long getId() {
+    public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }*/
+    }
 
     public Double getValue() {
         return value;

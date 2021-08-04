@@ -11,6 +11,7 @@ import java.util.Set;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
 public class StampDTO {
 
+    private Long id;
     @NotBlank
     private String name;
     @NotBlank
@@ -19,6 +20,14 @@ public class StampDTO {
     @YearOfIssueConstraint(message = "Year of issue must be between 1840 and current year.")
     private Integer yearOfIssue;
     private Set<Double> denominations;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

@@ -13,11 +13,9 @@ import java.util.stream.Collectors;
 public class DTOMapper {
 
     private final StampService stampService;
-    private final DenominationService denominationService;
 
-    public DTOMapper(StampService stampService, DenominationService denominationService) {
+    public DTOMapper(StampService stampService) {
         this.stampService = stampService;
-        this.denominationService = denominationService;
     }
 
 

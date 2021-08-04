@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "dateOfTransaction")
 public class TransactionDTO {
 
-    //private Long id;
+    private Long id;
     @PastOrPresent
     private LocalDate dateOfTransaction;
     private TransactionType transactionType;
@@ -21,15 +21,13 @@ public class TransactionDTO {
     @Positive
     private Double unitPrice;
 
-
-
-    /*public Long getId() {
+    public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }*/
+    }
 
     public LocalDate getDateOfTransaction() {
         return dateOfTransaction;
