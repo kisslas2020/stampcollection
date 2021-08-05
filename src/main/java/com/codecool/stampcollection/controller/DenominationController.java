@@ -9,6 +9,7 @@ import com.codecool.stampcollection.model.Denomination;
 import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.service.DenominationService;
 import com.codecool.stampcollection.service.StampService;
+import io.swagger.annotations.Api;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/denomination")
 @Validated
+@Api(tags = "Denominations")
 public class DenominationController {
 
     private final DenominationService service;

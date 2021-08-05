@@ -6,6 +6,7 @@ import com.codecool.stampcollection.DTO.TransactionDTO;
 import com.codecool.stampcollection.assembler.TransactionModelAssembler;
 import com.codecool.stampcollection.model.Transaction;
 import com.codecool.stampcollection.service.TransactionService;
+import io.swagger.annotations.Api;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/api/transaction")
 @Validated
+@Api(tags = "Transactions")
 public class TransactionController {
 
     private final TransactionService service;
