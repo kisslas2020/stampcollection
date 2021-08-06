@@ -5,13 +5,19 @@ CREATE TABLE item (
     id serial PRIMARY KEY,
     denom_id bigint,
     quantity bigint,
-    unit_price double precision
+    unit_price double precision,
+    transaction_id bigint
 );
 
 ALTER TABLE item
     ADD FOREIGN KEY (denom_id)
     REFERENCES denomination(id)
     ON DELETE SET NULL;
+
+ALTER TABLE item
+    ADD FOREIGN KEY (transaction_id)
+        REFERENCES transaction(id)
+        ON DELETE SET NULL;
 
 CREATE TABLE transaction_items(
     transaction_id bigint,
@@ -21,7 +27,4 @@ CREATE TABLE transaction_items(
 ALTER TABLE transaction_items
     ADD UNIQUE (item_id);
 
-ALTER TABLE transaction_items
-    ADD FOREIGN KEY (transaction_id)
-    REFERENCES transaction(id)
-    ON DELETE SET NULL;
+

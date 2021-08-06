@@ -7,6 +7,7 @@ public class ItemDTO {
     private DenominationDTO denominationDTO;
     private Long quantity;
     private Double unitPrice;
+    private TransactionDTO transactionDTO;
 
     public Long getId() {
         return id;
@@ -38,5 +39,13 @@ public class ItemDTO {
 
     public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public TransactionDTO getTransactionDTO() {
+        return transactionDTO;
+    }
+
+    public void setTransactionDTO(TransactionDTO transactionDTO) {
+        this.transactionDTO = transactionDTO;
     }
 }

@@ -6,6 +6,7 @@ import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.model.Transaction;
 import com.codecool.stampcollection.service.DenominationService;
 import com.codecool.stampcollection.service.StampService;
+import com.codecool.stampcollection.service.TransactionService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,10 +17,12 @@ public class DTOMapper {
 
     private final StampService stampService;
     private final DenominationService denominationService;
+    private final TransactionService transactionService;
 
-    public DTOMapper(StampService stampService, DenominationService denominationService) {
+    public DTOMapper(StampService stampService, DenominationService denominationService, TransactionService transactionService) {
         this.stampService = stampService;
         this.denominationService = denominationService;
+        this.transactionService = transactionService;
     }
 
 
@@ -85,6 +88,7 @@ public class DTOMapper {
         itemDTO.setQuantity(item.getQuantity());
         itemDTO.setUnitPrice(item.getUnitPrice());
         itemDTO.setDenominationDTO(entityToDto(item.getDenomination()));
+        itemDTO.setTransactionDTO(entityToDto(item.getTransaction()));
         return itemDTO;
     }
 
@@ -94,6 +98,8 @@ public class DTOMapper {
         item.setUnitPrice(command.getUnitPrice());
         Denomination denomination = denominationService.findById(command.getDenomId());
         item.setDenomination(denomination);
+        Transaction transaction = transactionService.findById(command.getTransactionId());
+        item.setTransaction(transaction);
         return item;
     }
 }

@@ -46,4 +46,6 @@ public class TransactionDTO {
     public void setItemDTOList(List<ItemDTO> itemDTOList) {
         this.itemDTOList = itemDTOList;
     }
+
+
 }

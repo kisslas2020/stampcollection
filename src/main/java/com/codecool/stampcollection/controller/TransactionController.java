@@ -62,7 +62,7 @@ public class TransactionController {
     }
 
     @ApiOperation(value = "Delete the selected transaction",
-            notes = "It can only be deleted if its denominations are not involved in subsequent transactions")
+            notes = "It can only be deleted if it has no items in it")
     @DeleteMapping("/{transaction_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("transaction_id") Long id) {

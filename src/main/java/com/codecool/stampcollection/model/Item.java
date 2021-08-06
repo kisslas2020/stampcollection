@@ -1,8 +1,12 @@
 package com.codecool.stampcollection.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "denomination")
 public class Item {
 
     @Id
@@ -12,6 +16,8 @@ public class Item {
     private Denomination denomination;
     private Long quantity;
     private Double unitPrice;
+    @ManyToOne
+    private Transaction transaction;
 
     public Long getId() {
         return id;
@@ -43,5 +49,13 @@ public class Item {
 
     public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
     }
 }

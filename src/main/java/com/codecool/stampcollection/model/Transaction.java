@@ -18,7 +18,7 @@ public class Transaction {
     private LocalDate dateOfTransaction;
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
-    @OneToMany
+    @OneToMany(mappedBy = "transaction")
     private List<Item> items;
 
     public Long getId() {

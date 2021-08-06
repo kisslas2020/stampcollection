@@ -13,6 +13,8 @@ public class ItemCommand {
     @Positive
     @NotNull
     private Double unitPrice;
+    @NotNull
+    private Long transactionId;
 
     public Long getDenomId() {
         return denomId;
@@ -36,5 +38,13 @@ public class ItemCommand {
 
     public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public Long getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
     }
 }
