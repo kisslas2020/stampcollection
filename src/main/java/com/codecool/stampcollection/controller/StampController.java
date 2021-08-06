@@ -87,7 +87,7 @@ public class StampController {
     }
 
     @ApiOperation(value = "Delete the selected stamp from collection",
-            notes = "It can be deleted only if its denominations have been deleted previously")
+            notes = "It can only be deleted if its denominations have been deleted previously")
     @DeleteMapping("/{stamp_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("stamp_id") Long id) {

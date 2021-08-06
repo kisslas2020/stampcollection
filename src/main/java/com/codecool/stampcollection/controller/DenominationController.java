@@ -10,6 +10,7 @@ import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.service.DenominationService;
 import com.codecool.stampcollection.service.StampService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -41,16 +42,19 @@ public class DenominationController {
         this.dtoMapper = dtoMapper;
     }
 
+    @ApiOperation(value = "View details of the selected denomination")
     @GetMapping("/{denom_id}")
     public EntityModel<DenominationDTO> findById(@PathVariable("denom_id") Long id) {
         return assembler.toModel(service.findById(id));
     }
 
+    @ApiOperation(value = "View a list of possessed denominations")
     @GetMapping
     public CollectionModel<EntityModel<DenominationDTO>> findAll() {
         return assembler.toCollectionModel(service.findAll());
     }
 
+    @ApiOperation(value = "Create a new denomination object")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<DenominationDTO> addNew(@Valid @RequestBody DenominationCommand command) {
@@ -58,6 +62,7 @@ public class DenominationController {
         return assembler.toModel(service.addNew(denomination));
     }
 
+    @ApiOperation(value = "Update an existing denomination")
     @PutMapping("/{denom_id}")
     public EntityModel<DenominationDTO> update(@PathVariable("denom_id") Long id, @Valid @RequestBody DenominationCommand command) {
         Denomination denomination = service.findById(id);
@@ -68,6 +73,8 @@ public class DenominationController {
         return assembler.toModel(service.addNew(denomination));
     }
 
+    @ApiOperation(value = "Delete the selected denomination from collection",
+            notes = "It can only be deleted if its stock value equals zero")
     @DeleteMapping("/{denom_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("denom_id") Long id) {

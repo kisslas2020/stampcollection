@@ -7,6 +7,7 @@ import com.codecool.stampcollection.assembler.TransactionModelAssembler;
 import com.codecool.stampcollection.model.Transaction;
 import com.codecool.stampcollection.service.TransactionService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -31,16 +32,19 @@ public class TransactionController {
         this.dtoMapper = dtoMapper;
     }
 
+    @ApiOperation(value = "View details of the selected transaction")
     @GetMapping("/{transaction_id}")
     public EntityModel<TransactionDTO> findById(@PathVariable("transaction_id") Long id) {
         return assembler.toModel(service.findById(id));
     }
 
+    @ApiOperation(value = "View a list of all transactions")
     @GetMapping
     public CollectionModel<EntityModel<TransactionDTO>> findAll() {
         return assembler.toCollectionModel(service.findAll());
     }
 
+    @ApiOperation(value = "Register a new transaction")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<TransactionDTO> addNew(@Valid @RequestBody TransactionCommand command) {
@@ -48,6 +52,8 @@ public class TransactionController {
         return assembler.toModel(service.addNew(transaction));
     }
 
+    @ApiOperation(value = "Update a registered transaction")
+    @PostMapping
     @PutMapping("/{transaction_id}")
     public EntityModel<TransactionDTO> update(@PathVariable("transaction_id") Long id, @Valid @RequestBody TransactionCommand command) {
         Transaction transaction = service.findById(id);
@@ -59,6 +65,9 @@ public class TransactionController {
         return assembler.toModel(service.addNew(transaction));
     }
 
+    @ApiOperation(value = "Delete the selected transaction",
+            notes = "It can only be deleted if its denominations are not involved in subsequent transactions")
+    @PostMapping
     @DeleteMapping("/{transaction_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("transaction_id") Long id) {
