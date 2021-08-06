@@ -12,6 +12,11 @@ CREATE TABLE denomination (
     stamp_id bigint
 );
 
+ALTER TABLE denomination
+    ADD FOREIGN KEY (stamp_id)
+    REFERENCES stamp(id)
+    ON DELETE SET NULL;
+
 CREATE TABLE transaction (
     id serial PRIMARY KEY,
     date_of_transaction date,
