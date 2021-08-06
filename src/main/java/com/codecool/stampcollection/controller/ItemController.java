@@ -4,6 +4,7 @@ import com.codecool.stampcollection.DTO.DTOMapper;
 import com.codecool.stampcollection.DTO.ItemCommand;
 import com.codecool.stampcollection.DTO.ItemDTO;
 import com.codecool.stampcollection.assembler.ItemModelAssembler;
+import com.codecool.stampcollection.exception.ItemNotFoundException;
 import com.codecool.stampcollection.model.Denomination;
 import com.codecool.stampcollection.model.Item;
 import com.codecool.stampcollection.service.DenominationService;
@@ -13,10 +14,15 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/item")
@@ -74,4 +80,5 @@ public class ItemController {
     public void deleteById(@PathVariable("item_id") Long id) {
         service.deleteById(id);
     }
+
 }

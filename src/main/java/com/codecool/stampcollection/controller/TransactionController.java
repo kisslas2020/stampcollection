@@ -4,6 +4,7 @@ import com.codecool.stampcollection.DTO.DTOMapper;
 import com.codecool.stampcollection.DTO.TransactionCommand;
 import com.codecool.stampcollection.DTO.TransactionDTO;
 import com.codecool.stampcollection.assembler.TransactionModelAssembler;
+import com.codecool.stampcollection.exception.TransactionNotFoundException;
 import com.codecool.stampcollection.model.Transaction;
 import com.codecool.stampcollection.service.TransactionService;
 import io.swagger.annotations.Api;
@@ -11,10 +12,15 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -68,6 +74,5 @@ public class TransactionController {
     public void deleteById(@PathVariable("transaction_id") Long id) {
         service.deleteById(id);
     }
-
 
 }

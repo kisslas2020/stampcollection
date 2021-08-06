@@ -81,17 +81,4 @@ public class DenominationController {
         service.deleteById(id);
     }
 
-    @ExceptionHandler(DenominationNotFoundException.class)
-    private ResponseEntity<Problem> handleNotFound(DenominationNotFoundException dnfe) {
-        Problem problem = Problem.builder()
-                .withType(URI.create("/api/denomination/denomination-not-found"))
-                .withTitle("not found")
-                .withStatus(Status.NOT_FOUND)
-                .withDetail(dnfe.getMessage())
-                .build();
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
-                .body(problem);
-    }
 }

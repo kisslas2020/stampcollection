@@ -28,4 +28,18 @@ public class GlobalControllerExceptionHandler {
                 .body(problem);
     }
 
+    @ExceptionHandler(UnsupportedOperationException.class)
+    public ResponseEntity<Problem> handleUnsupportedOperation(UnsupportedOperationException exception) {
+        Problem problem = Problem.builder()
+                .withType(URI.create("/api/unsupported-operation"))
+                .withTitle("Unsupported Operation Exception")
+                .withStatus(Status.BAD_REQUEST)
+                .withDetail(exception.getMessage())
+                .build();
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                .body(problem);
+    }
+
 }

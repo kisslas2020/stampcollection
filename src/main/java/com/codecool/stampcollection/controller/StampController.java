@@ -4,6 +4,7 @@ import com.codecool.stampcollection.DTO.DTOMapper;
 import com.codecool.stampcollection.DTO.StampCommand;
 import com.codecool.stampcollection.DTO.StampDTO;
 import com.codecool.stampcollection.assembler.StampModelAssembler;
+import com.codecool.stampcollection.exception.StampNotFoundException;
 import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.service.StampService;
 import io.swagger.annotations.Api;
@@ -11,12 +12,17 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.net.URI;
 import java.util.HashSet;
 
 @RestController
@@ -93,4 +99,18 @@ public class StampController {
     public void deleteById(@PathVariable("stamp_id") Long id) {
         service.deleteById(id);
     }
+
+    /*@ExceptionHandler(StampNotFoundException.class)
+    private ResponseEntity<Problem> handleNotFound(StampNotFoundException exception) {
+        Problem problem = Problem.builder()
+                .withType(URI.create("/api/denomination/denomination-not-found"))
+                .withTitle("not found")
+                .withStatus(Status.NOT_FOUND)
+                .withDetail(exception.getMessage())
+                .build();
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                .body(problem);
+    }*/
 }

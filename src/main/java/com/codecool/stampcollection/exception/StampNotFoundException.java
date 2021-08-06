@@ -1,8 +1,18 @@
 package com.codecool.stampcollection.exception;
 
-public class StampNotFoundException extends RuntimeException{
+import org.zalando.problem.AbstractThrowableProblem;
+import org.zalando.problem.Status;
+
+import java.net.URI;
+
+public class StampNotFoundException extends AbstractThrowableProblem {
 
     public StampNotFoundException(Long id) {
-        super("Could not find stamp with id: " + id);
+        super(
+                URI.create("/api/denomination/stamp-not-found"),
+                "not found",
+                Status.NOT_FOUND,
+                String.format("Stamp with id %d not found", id)
+        );
     }
 }
