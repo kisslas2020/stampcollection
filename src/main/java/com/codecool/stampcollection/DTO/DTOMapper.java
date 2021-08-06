@@ -1,20 +1,25 @@
 package com.codecool.stampcollection.DTO;
 
 import com.codecool.stampcollection.model.Denomination;
+import com.codecool.stampcollection.model.Item;
 import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.model.Transaction;
+import com.codecool.stampcollection.service.DenominationService;
 import com.codecool.stampcollection.service.StampService;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class DTOMapper {
 
     private final StampService stampService;
+    private final DenominationService denominationService;
 
-    public DTOMapper(StampService stampService) {
+    public DTOMapper(StampService stampService, DenominationService denominationService) {
         this.stampService = stampService;
+        this.denominationService = denominationService;
     }
 
 
@@ -61,18 +66,34 @@ public class DTOMapper {
         transactionDTO.setId(transaction.getId());
         transactionDTO.setDateOfTransaction(transaction.getDateOfTransaction());
         transactionDTO.setTransactionType(transaction.getTransactionType());
-        transactionDTO.setDenomId(transaction.getDenomId());
-        transactionDTO.setQuantity(transaction.getQuantity());
-        transactionDTO.setUnitPrice(transaction.getUnitPrice());
+        List<ItemDTO> items = transaction.getItems().stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
+        transactionDTO.setItemDTOList(items);
         return transactionDTO;
     }
     public Transaction dtoToEntity(TransactionCommand command) {
         Transaction transaction = new Transaction();
         transaction.setDateOfTransaction(command.getDateOfTransaction());
         transaction.setTransactionType(command.getTransactionType());
-        transaction.setDenomId(command.getDenomId());
-        transaction.setQuantity(command.getQuantity());
-        transaction.setUnitPrice(command.getUnitPrice());
         return transaction;
+    }
+
+    public ItemDTO entityToDto(Item item) {
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setId(item.getId());
+        itemDTO.setQuantity(item.getQuantity());
+        itemDTO.setUnitPrice(item.getUnitPrice());
+        itemDTO.setDenominationDTO(entityToDto(item.getDenomination()));
+        return itemDTO;
+    }
+
+    public Item dtoToEntity(ItemCommand command) {
+        Item item = new Item();
+        item.setQuantity(command.getQuantity());
+        item.setUnitPrice(command.getUnitPrice());
+        Denomination denomination = denominationService.findById(command.getDenomId());
+        item.setDenomination(denomination);
+        return item;
     }
 }

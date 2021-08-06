@@ -53,21 +53,16 @@ public class TransactionController {
     }
 
     @ApiOperation(value = "Update a registered transaction")
-    @PostMapping
     @PutMapping("/{transaction_id}")
     public EntityModel<TransactionDTO> update(@PathVariable("transaction_id") Long id, @Valid @RequestBody TransactionCommand command) {
         Transaction transaction = service.findById(id);
         transaction.setTransactionType(command.getTransactionType());
         transaction.setDateOfTransaction(command.getDateOfTransaction());
-        transaction.setUnitPrice(command.getUnitPrice());
-        transaction.setQuantity(command.getQuantity());
-        transaction.setDenomId(command.getDenomId());
         return assembler.toModel(service.addNew(transaction));
     }
 
     @ApiOperation(value = "Delete the selected transaction",
             notes = "It can only be deleted if its denominations are not involved in subsequent transactions")
-    @PostMapping
     @DeleteMapping("/{transaction_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("transaction_id") Long id) {

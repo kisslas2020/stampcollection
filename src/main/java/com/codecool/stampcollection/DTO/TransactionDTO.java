@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "dateOfTransaction")
 public class TransactionDTO {
@@ -12,9 +13,7 @@ public class TransactionDTO {
     private Long id;
     private LocalDate dateOfTransaction;
     private TransactionType transactionType;
-    private Long denomId;
-    private Long quantity;
-    private Double unitPrice;
+    private List<ItemDTO> itemDTOList;
 
     public Long getId() {
         return id;
@@ -40,27 +39,11 @@ public class TransactionDTO {
         this.transactionType = transactionType;
     }
 
-    public Long getDenomId() {
-        return denomId;
+    public List<ItemDTO> getItemDTOList() {
+        return itemDTOList;
     }
 
-    public void setDenomId(Long denomId) {
-        this.denomId = denomId;
-    }
-
-    public Long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
-    }
-
-    public Double getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(Double unitPrice) {
-        this.unitPrice = unitPrice;
+    public void setItemDTOList(List<ItemDTO> itemDTOList) {
+        this.itemDTOList = itemDTOList;
     }
 }

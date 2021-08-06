@@ -8,18 +8,15 @@ import javax.validation.constraints.Positive;
 import java.util.Currency;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "value")
 public class Denomination {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Positive
     private Double value;
     private Currency currency;
     @ManyToOne
     private Stamp stamp;
-    @Positive
     private Long stock;
 
     public Long getId() {

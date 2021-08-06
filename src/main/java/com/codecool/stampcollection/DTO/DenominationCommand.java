@@ -1,17 +1,17 @@
 package com.codecool.stampcollection.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.Currency;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "value")
 public class DenominationCommand {
 
     @Positive
+    @NotNull
     private Double value;
+    @NotNull
     private Currency currency;
+    @NotNull
     private Long stampId;
 
     public Double getValue() {
