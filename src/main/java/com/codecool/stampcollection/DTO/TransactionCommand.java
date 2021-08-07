@@ -1,11 +1,9 @@
 package com.codecool.stampcollection.DTO;
 
-import com.codecool.stampcollection.model.TransactionType;
+import com.codecool.stampcollection.validator.TransactionTypeConstraint;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
@@ -17,10 +15,10 @@ public class TransactionCommand {
     @NotNull
     private LocalDate dateOfTransaction;
 
-    @Enumerated(EnumType.STRING)
     @ApiModelProperty
     @NotNull
-    private TransactionType transactionType;
+    @TransactionTypeConstraint
+    private String transactionType;
 
     public LocalDate getDateOfTransaction() {
         return dateOfTransaction;
@@ -30,12 +28,11 @@ public class TransactionCommand {
         this.dateOfTransaction = dateOfTransaction;
     }
 
-    public TransactionType getTransactionType() {
+    public String getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(TransactionType transactionType) {
+    public void setTransactionType(String transactionType) {
         this.transactionType = transactionType;
     }
-
 }

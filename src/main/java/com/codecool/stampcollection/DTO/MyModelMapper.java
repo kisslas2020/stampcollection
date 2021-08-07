@@ -50,7 +50,7 @@ public class MyModelMapper {
     }
     public Transaction dtoToEntity(TransactionCommand command) {
         Transaction transaction = new Transaction();
-        transaction.setTransactionType(command.getTransactionType());
+        transaction.setTransactionType(TransactionType.valueOf(command.getTransactionType()));
         transaction.setDateOfTransaction(command.getDateOfTransaction());
         transaction.setItems(new ArrayList<>());
         return transaction;

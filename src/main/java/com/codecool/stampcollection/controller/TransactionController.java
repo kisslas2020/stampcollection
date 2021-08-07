@@ -5,6 +5,7 @@ import com.codecool.stampcollection.DTO.TransactionCommand;
 import com.codecool.stampcollection.DTO.TransactionDTO;
 import com.codecool.stampcollection.assembler.TransactionModelAssembler;
 import com.codecool.stampcollection.model.Transaction;
+import com.codecool.stampcollection.model.TransactionType;
 import com.codecool.stampcollection.service.TransactionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -55,7 +56,7 @@ public class TransactionController {
     @PutMapping("/{transaction_id}")
     public EntityModel<TransactionDTO> update(@PathVariable("transaction_id") Long id, @Valid @RequestBody TransactionCommand command) {
         Transaction transaction = service.findById(id);
-        transaction.setTransactionType(command.getTransactionType());
+        transaction.setTransactionType(TransactionType.valueOf(command.getTransactionType()));
         transaction.setDateOfTransaction(command.getDateOfTransaction());
         return assembler.toModel(service.addNew(transaction));
     }
