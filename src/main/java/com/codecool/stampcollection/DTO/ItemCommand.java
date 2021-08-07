@@ -6,7 +6,7 @@ import javax.validation.constraints.Positive;
 public class ItemCommand {
 
     @NotNull
-    private Long denomId;
+    private Long denominationId;
     @Positive
     @NotNull
     private Long quantity;
@@ -16,12 +16,12 @@ public class ItemCommand {
     @NotNull
     private Long transactionId;
 
-    public Long getDenomId() {
-        return denomId;
+    public Long getDenominationId() {
+        return denominationId;
     }
 
-    public void setDenomId(Long denomId) {
-        this.denomId = denomId;
+    public void setDenominationId(Long denominationId) {
+        this.denominationId = denominationId;
     }
 
     public Long getQuantity() {

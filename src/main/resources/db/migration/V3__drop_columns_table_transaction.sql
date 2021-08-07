@@ -1,16 +1,16 @@
 ALTER TABLE transaction
-    DROP COLUMN denom_id, quantity, unit_price;
+    DROP COLUMN denomination_id, quantity, unit_price;
 
 CREATE TABLE item (
     id serial PRIMARY KEY,
-    denom_id bigint,
+    denomination_id bigint,
     quantity bigint,
     unit_price double precision,
     transaction_id bigint
 );
 
 ALTER TABLE item
-    ADD FOREIGN KEY (denom_id)
+    ADD FOREIGN KEY (denomination_id)
     REFERENCES denomination(id)
     ON DELETE SET NULL;
 

@@ -9,6 +9,9 @@ import com.codecool.stampcollection.service.StampService;
 import com.codecool.stampcollection.service.TransactionService;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Currency;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +21,6 @@ public class DTOMapper {
     private final StampService stampService;
     private final DenominationService denominationService;
     private final TransactionService transactionService;
-
     public DTOMapper(StampService stampService, DenominationService denominationService, TransactionService transactionService) {
         this.stampService = stampService;
         this.denominationService = denominationService;
@@ -26,7 +28,7 @@ public class DTOMapper {
     }
 
 
-    public StampDTO entityToDto(Stamp stamp) {
+    /*public StampDTO entityToDto(Stamp stamp) {
         StampDTO stampDTO = new StampDTO();
         stampDTO.setId(stamp.getId());
         stampDTO.setCountry(stamp.getCountry());
@@ -36,13 +38,14 @@ public class DTOMapper {
                 .map(d -> d.getValue())
                 .collect(Collectors.toSet()));
         return stampDTO;
-    }
+    }*/
 
     public Stamp dtoToEntity(StampCommand command) {
         Stamp stamp = new Stamp();
         stamp.setCountry(command.getCountry());
         stamp.setName(command.getName());
         stamp.setYearOfIssue(command.getYearOfIssue());
+        stamp.setDenominations(new HashSet<>());
         return stamp;
     }
 
@@ -57,10 +60,11 @@ public class DTOMapper {
     }
     public Denomination dtoToEntity(DenominationCommand command) {
         Denomination denomination = new Denomination();
-        denomination.setCurrency(command.getCurrency());
+        denomination.setCurrency(Currency.getInstance(command.getCurrency()));
         denomination.setValue(command.getValue());
         Stamp stamp = stampService.findById(command.getStampId());
         denomination.setStamp(stamp);
+        denomination.setStock(0L);
         return denomination;
     }
 
@@ -79,6 +83,7 @@ public class DTOMapper {
         Transaction transaction = new Transaction();
         transaction.setDateOfTransaction(command.getDateOfTransaction());
         transaction.setTransactionType(command.getTransactionType());
+        transaction.setItems(new ArrayList<>());
         return transaction;
     }
 
@@ -96,7 +101,7 @@ public class DTOMapper {
         Item item = new Item();
         item.setQuantity(command.getQuantity());
         item.setUnitPrice(command.getUnitPrice());
-        Denomination denomination = denominationService.findById(command.getDenomId());
+        Denomination denomination = denominationService.findById(command.getDenominationId());
         item.setDenomination(denomination);
         Transaction transaction = transactionService.findById(command.getTransactionId());
         item.setTransaction(transaction);

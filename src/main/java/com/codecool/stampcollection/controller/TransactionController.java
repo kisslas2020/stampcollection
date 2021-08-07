@@ -1,10 +1,9 @@
 package com.codecool.stampcollection.controller;
 
-import com.codecool.stampcollection.DTO.DTOMapper;
+import com.codecool.stampcollection.DTO.MyModelMapper;
 import com.codecool.stampcollection.DTO.TransactionCommand;
 import com.codecool.stampcollection.DTO.TransactionDTO;
 import com.codecool.stampcollection.assembler.TransactionModelAssembler;
-import com.codecool.stampcollection.exception.TransactionNotFoundException;
 import com.codecool.stampcollection.model.Transaction;
 import com.codecool.stampcollection.service.TransactionService;
 import io.swagger.annotations.Api;
@@ -12,15 +11,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.zalando.problem.Problem;
-import org.zalando.problem.Status;
-
 import javax.validation.Valid;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -30,12 +23,12 @@ public class TransactionController {
 
     private final TransactionService service;
     private final TransactionModelAssembler assembler;
-    private final DTOMapper dtoMapper;
+    private final MyModelMapper myModelMapper;
 
-    public TransactionController(TransactionService service, TransactionModelAssembler assembler, DTOMapper dtoMapper) {
+    public TransactionController(TransactionService service, TransactionModelAssembler assembler, MyModelMapper myModelMapper) {
         this.service = service;
         this.assembler = assembler;
-        this.dtoMapper = dtoMapper;
+        this.myModelMapper = myModelMapper;
     }
 
     @ApiOperation(value = "View details of the selected transaction")
@@ -54,7 +47,7 @@ public class TransactionController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<TransactionDTO> addNew(@Valid @RequestBody TransactionCommand command) {
-        Transaction transaction = dtoMapper.dtoToEntity(command);
+        Transaction transaction = myModelMapper.dtoToEntity(command);
         return assembler.toModel(service.addNew(transaction));
     }
 

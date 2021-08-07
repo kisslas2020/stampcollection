@@ -1,10 +1,6 @@
 package com.codecool.stampcollection.model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
-import javax.validation.constraints.Positive;
 import java.util.Currency;
 
 @Entity

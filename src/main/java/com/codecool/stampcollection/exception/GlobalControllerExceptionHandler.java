@@ -14,13 +14,13 @@ import java.net.URI;
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Problem> handleJsonParseError(HttpMessageNotReadableException exception) {
+    @ExceptionHandler(UnsupportedOperationException.class)
+    public ResponseEntity<Problem> handleUnsupportedOperation(UnsupportedOperationException exception) {
         Problem problem = Problem.builder()
-                .withType(URI.create("/api/json-parse-error"))
-                .withTitle("JSON parse error")
+                .withType(URI.create("/api/unsupported-operation"))
+                .withTitle("Unsupported Operation Exception")
                 .withStatus(Status.BAD_REQUEST)
-                .withDetail(exception.getCause().getLocalizedMessage().split("\\n")[0])
+                .withDetail(exception.getMessage())
                 .build();
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
@@ -28,11 +28,11 @@ public class GlobalControllerExceptionHandler {
                 .body(problem);
     }
 
-    @ExceptionHandler(UnsupportedOperationException.class)
-    public ResponseEntity<Problem> handleUnsupportedOperation(UnsupportedOperationException exception) {
+    @ExceptionHandler(CurrencyNotExistsException.class)
+    public ResponseEntity<Problem> handleUnsupportedOperation(CurrencyNotExistsException exception) {
         Problem problem = Problem.builder()
-                .withType(URI.create("/api/unsupported-operation"))
-                .withTitle("Unsupported Operation Exception")
+                .withType(URI.create("/api/denomination/currency-not-exists"))
+                .withTitle("currency not extsts")
                 .withStatus(Status.BAD_REQUEST)
                 .withDetail(exception.getMessage())
                 .build();

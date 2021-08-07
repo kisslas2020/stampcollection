@@ -5,11 +5,7 @@ import io.swagger.annotations.ApiModel;
 @ApiModel
 public enum TransactionType {
 
-    BUY("BUY"), SELL("SELL");
+    BUY, SELL;
 
-    private final String name;
 
-    TransactionType(String name) {
-        this.name = name;
-    }
 }

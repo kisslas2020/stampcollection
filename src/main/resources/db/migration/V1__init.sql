@@ -20,7 +20,7 @@ ALTER TABLE denomination
 CREATE TABLE transaction (
     id serial PRIMARY KEY,
     date_of_transaction date,
-    denom_id bigint,
+    denomination_id bigint,
     quantity bigint,
     transaction_type varchar,
     unit_price double precision
@@ -28,4 +28,4 @@ CREATE TABLE transaction (
 
 INSERT INTO stamp (name, year_of_issue) VALUES ('Lepkék', 1980);
 INSERT INTO denomination (currency, stock, value, stamp_id) VALUES ('HUF', 1, 10, 1);
-INSERT INTO transaction (date_of_transaction, denom_id, quantity, transaction_type, unit_price) VALUES ('2021-07-30', 1, 12, 'BUY', 50);
+INSERT INTO transaction (date_of_transaction, denomination_id, quantity, transaction_type, unit_price) VALUES ('2021-07-30', 1, 12, 'BUY', 50);

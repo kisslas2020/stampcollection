@@ -1,5 +1,7 @@
 package com.codecool.stampcollection.DTO;
 
+import com.codecool.stampcollection.validator.CurrencyConstraint;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.Currency;
@@ -10,7 +12,8 @@ public class DenominationCommand {
     @NotNull
     private Double value;
     @NotNull
-    private Currency currency;
+    @CurrencyConstraint(message = "Use three-letter currency codes")
+    private String currency;
     @NotNull
     private Long stampId;
 
@@ -22,11 +25,11 @@ public class DenominationCommand {
         this.value = value;
     }
 
-    public Currency getCurrency() {
+    public String getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Currency currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
 

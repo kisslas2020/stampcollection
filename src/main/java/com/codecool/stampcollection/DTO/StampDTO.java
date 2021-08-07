@@ -12,7 +12,7 @@ public class StampDTO {
     private String name;
     private String country;
     private Integer yearOfIssue;
-    private Set<Double> denominations;
+    private Set<DenominationDTO> denominations;
 
     public Long getId() {
         return id;
@@ -46,11 +46,11 @@ public class StampDTO {
         this.yearOfIssue = yearOfIssue;
     }
 
-    public Set<Double> getDenominations() {
+    public Set<DenominationDTO> getDenominations() {
         return denominations;
     }
 
-    public void setDenominations(Set<Double> denominations) {
+    public void setDenominations(Set<DenominationDTO> denominations) {
         this.denominations = denominations;
     }
 }

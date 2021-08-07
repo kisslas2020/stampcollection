@@ -1,6 +1,9 @@
 package com.codecool.stampcollection.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "denominationDTO")
 public class ItemDTO {
 
     private Long id;
