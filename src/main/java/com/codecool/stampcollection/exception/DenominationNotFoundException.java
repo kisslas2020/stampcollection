@@ -2,9 +2,6 @@ package com.codecool.stampcollection.exception;
 
 import org.zalando.problem.AbstractThrowableProblem;
 import org.zalando.problem.Status;
-import org.zalando.problem.StatusType;
-
-import javax.annotation.Nullable;
 import java.net.URI;
 
 public class DenominationNotFoundException extends AbstractThrowableProblem {

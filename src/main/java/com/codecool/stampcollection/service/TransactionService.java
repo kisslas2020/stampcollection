@@ -1,9 +1,7 @@
 package com.codecool.stampcollection.service;
 
 import com.codecool.stampcollection.exception.TransactionNotFoundException;
-import com.codecool.stampcollection.model.Denomination;
 import com.codecool.stampcollection.model.Transaction;
-import com.codecool.stampcollection.repository.DenominationRepository;
 import com.codecool.stampcollection.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +11,9 @@ import java.util.List;
 public class TransactionService {
 
     private final TransactionRepository repository;
-    private final DenominationRepository denominationRepository;
 
-    public TransactionService(TransactionRepository repository, DenominationRepository denominationRepository) {
+    public TransactionService(TransactionRepository repository) {
         this.repository = repository;
-        this.denominationRepository = denominationRepository;
     }
 
     public Transaction findById(Long id) {
@@ -31,6 +27,20 @@ public class TransactionService {
     }
 
     public Transaction addNew(Transaction transaction) {
+        return repository.save(transaction);
+    }
+
+    public void deleteById(Long id) {
+        Transaction transaction = findById(id);
+        if (transaction.getItems().size() > 0) {
+            throw new UnsupportedOperationException("Cannot delete transaction that has items in it");
+        }
+        repository.deleteById(id);
+    }
+
+
+
+    /*public Transaction addNew(Transaction transaction) {
         Long denomId = transaction.getDenomId();
         Denomination denomination = denominationRepository.findById(denomId)
                 .orElseThrow(() -> new UnsupportedOperationException("non-existent denominations cannot be purchased"));
@@ -69,6 +79,6 @@ public class TransactionService {
                 signedQuantity = transaction.getQuantity() * (-1);
         }
         return signedQuantity;
-    }
+    }*/
 
 }

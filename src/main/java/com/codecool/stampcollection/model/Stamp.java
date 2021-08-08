@@ -15,12 +15,8 @@ public class Stamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
     private String name;
-    @NotBlank
-    @Size(min = 3, max = 3, message = "Use three-letter Alpha-3 code.")
     private String country;
-    @YearOfIssueConstraint(message = "Year of issue must be between 1840 and current year.")
     private Integer yearOfIssue;
     @OneToMany(mappedBy = "stamp")
     private Set<Denomination> denominations;

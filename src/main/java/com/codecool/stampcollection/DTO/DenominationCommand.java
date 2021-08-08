@@ -1,17 +1,20 @@
 package com.codecool.stampcollection.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.codecool.stampcollection.validator.CurrencyConstraint;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.Currency;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "value")
 public class DenominationCommand {
 
     @Positive
+    @NotNull
     private Double value;
-    private Currency currency;
+    @NotNull
+    @CurrencyConstraint(message = "Use three-letter currency codes")
+    private String currency;
+    @NotNull
     private Long stampId;
 
     public Double getValue() {
@@ -22,11 +25,11 @@ public class DenominationCommand {
         this.value = value;
     }
 
-    public Currency getCurrency() {
+    public String getCurrency() {
         return currency;
     }
 
-    public void setCurrency(Currency currency) {
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
 

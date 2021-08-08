@@ -1,6 +1,6 @@
 package com.codecool.stampcollection.controller;
 
-import com.codecool.stampcollection.DTO.DTOMapper;
+import com.codecool.stampcollection.DTO.MyModelMapper;
 import com.codecool.stampcollection.DTO.StampCommand;
 import com.codecool.stampcollection.DTO.StampDTO;
 import com.codecool.stampcollection.assembler.StampModelAssembler;
@@ -27,12 +27,12 @@ public class StampController {
 
     private final StampService service;
     private final StampModelAssembler assembler;
-    private final DTOMapper dtoMapper;
+    private final MyModelMapper myModelMapper;
 
-    public StampController(StampService service, StampModelAssembler assembler, DTOMapper dtoMapper) {
+    public StampController(StampService service, StampModelAssembler assembler, MyModelMapper myModelMapper) {
         this.service = service;
         this.assembler = assembler;
-        this.dtoMapper = dtoMapper;
+        this.myModelMapper = myModelMapper;
     }
 
     @ApiOperation(value = "View a list of possessed stamps")
@@ -71,7 +71,7 @@ public class StampController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<StampDTO> addNew(@Valid @RequestBody StampCommand command) {
-        Stamp stamp = dtoMapper.dtoToEntity(command);
+        Stamp stamp = myModelMapper.dtoToEntity(command);
         stamp.setDenominations(new HashSet<>());
         return assembler.toModel(service.addNew(stamp));
     }
@@ -93,4 +93,18 @@ public class StampController {
     public void deleteById(@PathVariable("stamp_id") Long id) {
         service.deleteById(id);
     }
+
+    /*@ExceptionHandler(StampNotFoundException.class)
+    private ResponseEntity<Problem> handleNotFound(StampNotFoundException exception) {
+        Problem problem = Problem.builder()
+                .withType(URI.create("/api/denomination/denomination-not-found"))
+                .withTitle("not found")
+                .withStatus(Status.NOT_FOUND)
+                .withDetail(exception.getMessage())
+                .build();
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
+                .body(problem);
+    }*/
 }

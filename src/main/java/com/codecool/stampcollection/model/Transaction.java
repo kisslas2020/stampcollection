@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "dateOfTransaction")
@@ -15,15 +14,11 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @PastOrPresent
     private LocalDate dateOfTransaction;
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
-    private Long denomId;
-    @Positive
-    private Long quantity;
-    @Positive
-    private Double unitPrice;
+    @OneToMany(mappedBy = "transaction")
+    private List<Item> items;
 
     public Long getId() {
         return id;
@@ -49,27 +44,11 @@ public class Transaction {
         this.transactionType = transactionType;
     }
 
-    public Long getDenomId() {
-        return denomId;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setDenomId(Long denomId) {
-        this.denomId = denomId;
-    }
-
-    public Long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
-    }
-
-    public Double getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(Double unitPrice) {
-        this.unitPrice = unitPrice;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 }

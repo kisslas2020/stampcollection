@@ -1,6 +1,6 @@
 package com.codecool.stampcollection.assembler;
 
-import com.codecool.stampcollection.DTO.DTOMapper;
+import com.codecool.stampcollection.DTO.MyModelMapper;
 import com.codecool.stampcollection.DTO.DenominationDTO;
 import com.codecool.stampcollection.controller.DenominationController;
 import com.codecool.stampcollection.model.Denomination;
@@ -19,15 +19,15 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 public class DenominationModelAssembler implements RepresentationModelAssembler<Denomination, EntityModel<DenominationDTO>> {
 
-    private final DTOMapper dtoMapper;
+    private final MyModelMapper myModelMapper;
 
-    public DenominationModelAssembler(DTOMapper dtoMapper) {
-        this.dtoMapper = dtoMapper;
+    public DenominationModelAssembler(MyModelMapper myModelMapper) {
+        this.myModelMapper = myModelMapper;
     }
 
     @Override
     public EntityModel<DenominationDTO> toModel(Denomination entity) {
-        DenominationDTO denominationDTO = dtoMapper.entityToDto(entity);
+        DenominationDTO denominationDTO = myModelMapper.entityToDto(entity);
         return EntityModel.of(denominationDTO,
                 linkTo(methodOn(DenominationController.class).findById(entity.getId())).withSelfRel(),
                 linkTo(methodOn(DenominationController.class).findAll()).withRel("denominations"));

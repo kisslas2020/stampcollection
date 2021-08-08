@@ -27,6 +27,9 @@ public class DenominationService {
     }
 
     public Denomination addNew(Denomination denomination) {
+        if (repository.countDenominationByValueAndCurrencyAndStamp_Id(denomination.getValue(), denomination.getCurrency(), denomination.getStamp().getId()) != 0) {
+            throw new UnsupportedOperationException("Denomination already exists");
+        }
         return repository.save(denomination);
     }
 

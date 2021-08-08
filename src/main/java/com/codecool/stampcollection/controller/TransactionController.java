@@ -1,10 +1,11 @@
 package com.codecool.stampcollection.controller;
 
-import com.codecool.stampcollection.DTO.DTOMapper;
+import com.codecool.stampcollection.DTO.MyModelMapper;
 import com.codecool.stampcollection.DTO.TransactionCommand;
 import com.codecool.stampcollection.DTO.TransactionDTO;
 import com.codecool.stampcollection.assembler.TransactionModelAssembler;
 import com.codecool.stampcollection.model.Transaction;
+import com.codecool.stampcollection.model.TransactionType;
 import com.codecool.stampcollection.service.TransactionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,7 +14,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 @RestController
@@ -24,12 +24,12 @@ public class TransactionController {
 
     private final TransactionService service;
     private final TransactionModelAssembler assembler;
-    private final DTOMapper dtoMapper;
+    private final MyModelMapper myModelMapper;
 
-    public TransactionController(TransactionService service, TransactionModelAssembler assembler, DTOMapper dtoMapper) {
+    public TransactionController(TransactionService service, TransactionModelAssembler assembler, MyModelMapper myModelMapper) {
         this.service = service;
         this.assembler = assembler;
-        this.dtoMapper = dtoMapper;
+        this.myModelMapper = myModelMapper;
     }
 
     @ApiOperation(value = "View details of the selected transaction")
@@ -48,7 +48,7 @@ public class TransactionController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<TransactionDTO> addNew(@Valid @RequestBody TransactionCommand command) {
-        Transaction transaction = dtoMapper.dtoToEntity(command);
+        Transaction transaction = myModelMapper.dtoToEntity(command);
         return assembler.toModel(service.addNew(transaction));
     }
 
@@ -56,21 +56,17 @@ public class TransactionController {
     @PutMapping("/{transaction_id}")
     public EntityModel<TransactionDTO> update(@PathVariable("transaction_id") Long id, @Valid @RequestBody TransactionCommand command) {
         Transaction transaction = service.findById(id);
-        transaction.setTransactionType(command.getTransactionType());
+        transaction.setTransactionType(TransactionType.valueOf(command.getTransactionType()));
         transaction.setDateOfTransaction(command.getDateOfTransaction());
-        transaction.setUnitPrice(command.getUnitPrice());
-        transaction.setQuantity(command.getQuantity());
-        transaction.setDenomId(command.getDenomId());
         return assembler.toModel(service.addNew(transaction));
     }
 
     @ApiOperation(value = "Delete the selected transaction",
-            notes = "It can only be deleted if its denominations are not involved in subsequent transactions")
+            notes = "It can only be deleted if it has no items in it")
     @DeleteMapping("/{transaction_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("transaction_id") Long id) {
         service.deleteById(id);
     }
-
 
 }

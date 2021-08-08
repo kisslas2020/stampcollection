@@ -1,6 +1,6 @@
 package com.codecool.stampcollection.assembler;
 
-import com.codecool.stampcollection.DTO.DTOMapper;
+import com.codecool.stampcollection.DTO.MyModelMapper;
 import com.codecool.stampcollection.DTO.StampDTO;
 import com.codecool.stampcollection.controller.StampController;
 import com.codecool.stampcollection.model.Stamp;
@@ -19,15 +19,15 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 public class StampModelAssembler implements RepresentationModelAssembler<Stamp, EntityModel<StampDTO>> {
 
-    private final DTOMapper dtoMapper;
+    private final MyModelMapper myModelMapper;
 
-    public StampModelAssembler(DTOMapper dtoMapper) {
-        this.dtoMapper = dtoMapper;
+    public StampModelAssembler(MyModelMapper myModelMapper) {
+        this.myModelMapper = myModelMapper;
     }
 
     @Override
     public EntityModel<StampDTO> toModel(Stamp entity) {
-        StampDTO stampDTO = dtoMapper.entityToDto(entity);
+        StampDTO stampDTO = myModelMapper.entityToDto(entity);
         return EntityModel.of(stampDTO,
                 linkTo(methodOn(StampController.class).findById(entity.getId())).withSelfRel(),
                 linkTo(methodOn(StampController.class).findAll()).withRel("stamps"));

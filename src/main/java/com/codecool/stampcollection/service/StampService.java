@@ -39,15 +39,18 @@ public class StampService {
     }
 
     public Stamp addNew(Stamp stamp) {
+        if (repository.countStampByCountryAndYearOfIssueAndName(stamp.getCountry(),
+                stamp.getYearOfIssue(), stamp.getName()) != 0) {
+            throw new UnsupportedOperationException("Stamp already exists");
+        }
         return repository.save(stamp);
     }
 
     public void deleteById(Long id) {
         Stamp stamp = repository.findById(id).orElseThrow(() -> new StampNotFoundException(id));
-        if (stamp.getDenominations().size() == 0) {
-            repository.deleteById(id);
-        } else {
-            throw new UnsupportedOperationException("you cannot delete stamp with active denominations");
+        if (stamp.getDenominations().size() != 0) {
+            throw new UnsupportedOperationException("You cannot delete stamp with active denominations");
         }
+        repository.deleteById(id);
     }
 }

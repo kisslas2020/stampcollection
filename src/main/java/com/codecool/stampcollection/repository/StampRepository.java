@@ -12,4 +12,6 @@ public interface StampRepository extends JpaRepository<Stamp, Long> {
     List<Stamp> findAllByYearOfIssue(Integer year);
 
     List<Stamp> findAllByCountryAndYearOfIssue(String country, Integer year);
+
+    Long countStampByCountryAndYearOfIssueAndName(String country, Integer year, String name);
 }

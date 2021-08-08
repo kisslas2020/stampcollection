@@ -5,14 +5,14 @@ import org.zalando.problem.Status;
 
 import java.net.URI;
 
-public class StampNotFoundException extends AbstractThrowableProblem {
+public class ItemNotFoundException extends AbstractThrowableProblem {
 
-    public StampNotFoundException(Long id) {
+    public ItemNotFoundException(Long id) {
         super(
-                URI.create("/api/denomination/stamp-not-found"),
+                URI.create("/api/denomination/item-not-found"),
                 "not found",
                 Status.NOT_FOUND,
-                String.format("Stamp with id %d not found", id)
+                String.format("Item with id %d not found", id)
         );
     }
 }

@@ -1,10 +1,9 @@
 package com.codecool.stampcollection.controller;
 
-import com.codecool.stampcollection.DTO.DTOMapper;
+import com.codecool.stampcollection.DTO.MyModelMapper;
 import com.codecool.stampcollection.DTO.DenominationCommand;
 import com.codecool.stampcollection.DTO.DenominationDTO;
 import com.codecool.stampcollection.assembler.DenominationModelAssembler;
-import com.codecool.stampcollection.exception.DenominationNotFoundException;
 import com.codecool.stampcollection.model.Denomination;
 import com.codecool.stampcollection.model.Stamp;
 import com.codecool.stampcollection.service.DenominationService;
@@ -14,15 +13,11 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.zalando.problem.Problem;
-import org.zalando.problem.Status;
 
 import javax.validation.Valid;
-import java.net.URI;
+import java.util.Currency;
 
 @RestController
 @RequestMapping("/api/denomination")
@@ -33,13 +28,13 @@ public class DenominationController {
     private final DenominationService service;
     private final StampService stampService;
     private final DenominationModelAssembler assembler;
-    private final DTOMapper dtoMapper;
+    private final MyModelMapper myModelMapper;
 
-    public DenominationController(DenominationService service, StampService stampService, DenominationModelAssembler assembler, DTOMapper dtoMapper) {
+    public DenominationController(DenominationService service, StampService stampService, DenominationModelAssembler assembler, MyModelMapper myModelMapper) {
         this.service = service;
         this.stampService = stampService;
         this.assembler = assembler;
-        this.dtoMapper = dtoMapper;
+        this.myModelMapper = myModelMapper;
     }
 
     @ApiOperation(value = "View details of the selected denomination")
@@ -58,7 +53,7 @@ public class DenominationController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<DenominationDTO> addNew(@Valid @RequestBody DenominationCommand command) {
-        Denomination denomination = dtoMapper.dtoToEntity(command);
+        Denomination denomination = myModelMapper.dtoToEntity(command);
         return assembler.toModel(service.addNew(denomination));
     }
 
@@ -67,7 +62,7 @@ public class DenominationController {
     public EntityModel<DenominationDTO> update(@PathVariable("denom_id") Long id, @Valid @RequestBody DenominationCommand command) {
         Denomination denomination = service.findById(id);
         denomination.setValue(command.getValue());
-        denomination.setCurrency(command.getCurrency());
+        denomination.setCurrency(Currency.getInstance(command.getCurrency()));
         Stamp stamp = stampService.findById(command.getStampId());
         denomination.setStamp(stamp);
         return assembler.toModel(service.addNew(denomination));
@@ -81,17 +76,4 @@ public class DenominationController {
         service.deleteById(id);
     }
 
-    @ExceptionHandler(DenominationNotFoundException.class)
-    private ResponseEntity<Problem> handleNotFound(DenominationNotFoundException dnfe) {
-        Problem problem = Problem.builder()
-                .withType(URI.create("/api/denomination/denomination-not-found"))
-                .withTitle("not found")
-                .withStatus(Status.NOT_FOUND)
-                .withDetail(dnfe.getMessage())
-                .build();
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
-                .body(problem);
-    }
 }

@@ -27,7 +27,8 @@ public class SpringFoxConfig {
                 .tags(
                         new Tag("Stamps", "Endpoints for operations on stamps"),
                         new Tag("Transactions", "Endpoints for operations on transactions"),
-                        new Tag("Denominations", "Endpoints for operations on denominations")
+                        new Tag("Denominations", "Endpoints for operations on denominations"),
+                        new Tag("Items", "Endpoints for operations on items of a transaction")
                 )
                 .apiInfo(apiDetails());
     }

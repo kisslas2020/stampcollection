@@ -3,7 +3,6 @@ package com.codecool.stampcollection.validator;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
-import java.util.Locale;
 
 public class YearOfIssueValidator implements ConstraintValidator<YearOfIssueConstraint, Integer> {
 
