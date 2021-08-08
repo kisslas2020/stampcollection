@@ -45,7 +45,9 @@ public class MyModelMapper {
 
     public TransactionDTO entityToDto(Transaction transaction) {
         TransactionDTO transactionDTO = modelMapper.map(transaction, TransactionDTO.class);
-        transactionDTO.setItemDTOList(transaction.getItems().stream().map(this::entityToDto).collect(Collectors.toList()));
+        transactionDTO.setItemDTOList(transaction.getItems().stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList()));
         return transactionDTO;
     }
     public Transaction dtoToEntity(TransactionCommand command) {

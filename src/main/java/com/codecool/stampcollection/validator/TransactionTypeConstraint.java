@@ -13,4 +13,5 @@ public @interface TransactionTypeConstraint {
     String message() default "Transaction type can be 'BUY' or 'SELL'";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
+
 }

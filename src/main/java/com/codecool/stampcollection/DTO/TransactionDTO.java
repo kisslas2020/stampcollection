@@ -47,5 +47,4 @@ public class TransactionDTO {
         this.itemDTOList = itemDTOList;
     }
 
-
 }

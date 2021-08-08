@@ -4,7 +4,6 @@ import com.codecool.stampcollection.validator.CurrencyConstraint;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import java.util.Currency;
 
 public class DenominationCommand {
 

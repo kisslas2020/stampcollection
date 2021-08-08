@@ -1,7 +1,6 @@
 package com.codecool.stampcollection.config;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.config.Configuration.*;
 import org.springframework.context.annotation.Bean;

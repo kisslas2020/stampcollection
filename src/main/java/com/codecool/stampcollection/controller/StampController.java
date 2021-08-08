@@ -94,17 +94,4 @@ public class StampController {
         service.deleteById(id);
     }
 
-    /*@ExceptionHandler(StampNotFoundException.class)
-    private ResponseEntity<Problem> handleNotFound(StampNotFoundException exception) {
-        Problem problem = Problem.builder()
-                .withType(URI.create("/api/denomination/denomination-not-found"))
-                .withTitle("not found")
-                .withStatus(Status.NOT_FOUND)
-                .withDetail(exception.getMessage())
-                .build();
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .contentType(MediaType.APPLICATION_PROBLEM_JSON)
-                .body(problem);
-    }*/
 }

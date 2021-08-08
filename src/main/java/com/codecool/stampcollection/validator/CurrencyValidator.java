@@ -19,4 +19,5 @@ public class CurrencyValidator implements ConstraintValidator<CurrencyConstraint
             throw new CurrencyNotExistsException(currency);
         }
     }
+
 }

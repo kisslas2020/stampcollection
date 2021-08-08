@@ -30,7 +30,8 @@ public class DenominationController {
     private final DenominationModelAssembler assembler;
     private final MyModelMapper myModelMapper;
 
-    public DenominationController(DenominationService service, StampService stampService, DenominationModelAssembler assembler, MyModelMapper myModelMapper) {
+    public DenominationController(DenominationService service, StampService stampService,
+                                  DenominationModelAssembler assembler, MyModelMapper myModelMapper) {
         this.service = service;
         this.stampService = stampService;
         this.assembler = assembler;
@@ -59,7 +60,8 @@ public class DenominationController {
 
     @ApiOperation(value = "Update an existing denomination")
     @PutMapping("/{denom_id}")
-    public EntityModel<DenominationDTO> update(@PathVariable("denom_id") Long id, @Valid @RequestBody DenominationCommand command) {
+    public EntityModel<DenominationDTO> update(@PathVariable("denom_id") Long id,
+                                               @Valid @RequestBody DenominationCommand command) {
         Denomination denomination = service.findById(id);
         denomination.setValue(command.getValue());
         denomination.setCurrency(Currency.getInstance(command.getCurrency()));

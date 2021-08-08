@@ -1,11 +1,9 @@
 package com.codecool.stampcollection.model;
 
-import com.codecool.stampcollection.validator.YearOfIssueConstraint;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.util.Set;
 
 @Entity
@@ -20,8 +18,6 @@ public class Stamp {
     private Integer yearOfIssue;
     @OneToMany(mappedBy = "stamp")
     private Set<Denomination> denominations;
-
-
 
     public Long getId() {
         return id;
@@ -62,4 +58,5 @@ public class Stamp {
     public void setDenominations(Set<Denomination> denominations) {
         this.denominations = denominations;
     }
+
 }

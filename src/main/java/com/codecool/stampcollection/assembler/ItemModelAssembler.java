@@ -4,7 +4,6 @@ import com.codecool.stampcollection.DTO.MyModelMapper;
 import com.codecool.stampcollection.DTO.ItemDTO;
 import com.codecool.stampcollection.controller.ItemController;
 import com.codecool.stampcollection.model.Item;
-import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -30,8 +29,12 @@ public class ItemModelAssembler implements RepresentationModelAssembler<Item, En
     public EntityModel<ItemDTO> toModel(Item entity) {
         ItemDTO itemDTO = myModelMapper.entityToDto(entity);
         return EntityModel.of(itemDTO,
-                linkTo(methodOn(ItemController.class).findById(entity.getId())).withSelfRel(),
-                linkTo(methodOn(ItemController.class).findAll()).withRel("stamps"));
+                linkTo(methodOn(ItemController.class)
+                        .findById(entity.getId()))
+                        .withSelfRel(),
+                linkTo(methodOn(ItemController.class)
+                        .findAll())
+                        .withRel("stamps"));
     }
 
     @Override
@@ -40,6 +43,8 @@ public class ItemModelAssembler implements RepresentationModelAssembler<Item, En
                 .map(this::toModel)
                 .collect(Collectors.toList());
 
-        return CollectionModel.of(items, linkTo(methodOn(ItemController.class).findAll()).withSelfRel());
+        return CollectionModel.of(items, linkTo(methodOn(ItemController.class)
+                .findAll())
+                .withSelfRel());
     }
 }

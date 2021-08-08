@@ -40,9 +40,9 @@ public class SpringFoxConfig {
                 "Digitalized way to  record your stamp collection",
                 "1.0",
                 "Free",
-                new Contact("xyz", "www.def.com", "xyz@def.com"),
+                new Contact("Kiss László", "www.codecool.com", "pinewood82@gmail.com"),
                 "licence",
-                "www.def.com",
+                "www.codecool.com",
                 Collections.emptyList()
                 );
     }

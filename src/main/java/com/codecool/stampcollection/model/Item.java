@@ -1,6 +1,5 @@
 package com.codecool.stampcollection.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -13,7 +12,6 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     private Denomination denomination;
     private Long quantity;
@@ -60,10 +58,5 @@ public class Item {
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
     }
-
-    @OneToOne
-    private Denomination denomination;
-    private Long quantity;
-    private Double unitPrice;
 
 }

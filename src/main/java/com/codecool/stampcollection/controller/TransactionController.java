@@ -26,7 +26,8 @@ public class TransactionController {
     private final TransactionModelAssembler assembler;
     private final MyModelMapper myModelMapper;
 
-    public TransactionController(TransactionService service, TransactionModelAssembler assembler, MyModelMapper myModelMapper) {
+    public TransactionController(TransactionService service, TransactionModelAssembler assembler,
+                                 MyModelMapper myModelMapper) {
         this.service = service;
         this.assembler = assembler;
         this.myModelMapper = myModelMapper;
@@ -44,7 +45,8 @@ public class TransactionController {
         return assembler.toCollectionModel(service.findAll());
     }
 
-    @ApiOperation(value = "Register a new transaction")
+    @ApiOperation(value = "Register a new transaction",
+            notes = "Transaction type has two values: BUY and SELL (case sensitive)")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<TransactionDTO> addNew(@Valid @RequestBody TransactionCommand command) {
@@ -52,9 +54,11 @@ public class TransactionController {
         return assembler.toModel(service.addNew(transaction));
     }
 
-    @ApiOperation(value = "Update a registered transaction")
+    @ApiOperation(value = "Update a registered transaction",
+            notes = "Transaction type has two values: BUY and SELL (case sensitive)")
     @PutMapping("/{transaction_id}")
-    public EntityModel<TransactionDTO> update(@PathVariable("transaction_id") Long id, @Valid @RequestBody TransactionCommand command) {
+    public EntityModel<TransactionDTO> update(@PathVariable("transaction_id") Long id,
+                                              @Valid @RequestBody TransactionCommand command) {
         Transaction transaction = service.findById(id);
         transaction.setTransactionType(TransactionType.valueOf(command.getTransactionType()));
         transaction.setDateOfTransaction(command.getDateOfTransaction());

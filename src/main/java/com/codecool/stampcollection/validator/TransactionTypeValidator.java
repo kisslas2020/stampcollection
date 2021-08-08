@@ -8,10 +8,10 @@ import java.util.Arrays;
 
 public class TransactionTypeValidator implements ConstraintValidator<TransactionTypeConstraint, String> {
 
-
     @Override
     public boolean isValid(String transactionType, ConstraintValidatorContext constraintValidatorContext) {
         return Arrays.stream(TransactionType.values())
                 .anyMatch(type -> type.getName().equals(transactionType));
     }
+
 }
