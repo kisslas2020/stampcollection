@@ -15,6 +15,16 @@ public class TransactionDTO {
     private TransactionType transactionType;
     private List<ItemDTO> itemDTOList;
 
+    public TransactionDTO() {
+    }
+
+    public TransactionDTO(Long id, LocalDate dateOfTransaction, TransactionType transactionType, List<ItemDTO> itemDTOList) {
+        this.id = id;
+        this.dateOfTransaction = dateOfTransaction;
+        this.transactionType = transactionType;
+        this.itemDTOList = itemDTOList;
+    }
+
     public Long getId() {
         return id;
     }

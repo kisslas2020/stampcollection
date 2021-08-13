@@ -20,6 +20,16 @@ public class Transaction {
     @OneToMany(mappedBy = "transaction")
     private List<Item> items;
 
+    public Transaction() {
+    }
+
+    public Transaction(Long id, LocalDate dateOfTransaction, TransactionType transactionType, List<Item> items) {
+        this.id = id;
+        this.dateOfTransaction = dateOfTransaction;
+        this.transactionType = transactionType;
+        this.items = items;
+    }
+
     public Long getId() {
         return id;
     }

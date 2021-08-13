@@ -20,6 +20,14 @@ public class TransactionCommand {
     @TransactionTypeConstraint
     private String transactionType;
 
+    public TransactionCommand() {
+    }
+
+    public TransactionCommand(LocalDate dateOfTransaction, String transactionType) {
+        this.dateOfTransaction = dateOfTransaction;
+        this.transactionType = transactionType;
+    }
+
     public LocalDate getDateOfTransaction() {
         return dateOfTransaction;
     }

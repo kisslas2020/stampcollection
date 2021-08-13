@@ -12,6 +12,17 @@ public class ItemDTO {
     private Double unitPrice;
     private TransactionDTO transactionDTO;
 
+    public ItemDTO() {
+    }
+
+    public ItemDTO(Long id, DenominationDTO denominationDTO, Long quantity, Double unitPrice, TransactionDTO transactionDTO) {
+        this.id = id;
+        this.denominationDTO = denominationDTO;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.transactionDTO = transactionDTO;
+    }
+
     public Long getId() {
         return id;
     }

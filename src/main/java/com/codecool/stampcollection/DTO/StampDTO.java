@@ -14,6 +14,17 @@ public class StampDTO {
     private Integer yearOfIssue;
     private Set<DenominationDTO> denominations;
 
+    public StampDTO() {
+    }
+
+    public StampDTO(Long id, String name, String country, Integer yearOfIssue, Set<DenominationDTO> denominations) {
+        this.id = id;
+        this.name = name;
+        this.country = country;
+        this.yearOfIssue = yearOfIssue;
+        this.denominations = denominations;
+    }
+
     public Long getId() {
         return id;
     }

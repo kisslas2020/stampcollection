@@ -15,6 +15,17 @@ public class Denomination {
     private Stamp stamp;
     private Long stock;
 
+    public Denomination() {
+    }
+
+    public Denomination(Long id, Double value, Currency currency, Stamp stamp, Long stock) {
+        this.id = id;
+        this.value = value;
+        this.currency = currency;
+        this.stamp = stamp;
+        this.stock = stock;
+    }
+
     public Long getId() {
         return id;
     }

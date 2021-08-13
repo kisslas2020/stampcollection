@@ -19,6 +19,17 @@ public class Stamp {
     @OneToMany(mappedBy = "stamp")
     private Set<Denomination> denominations;
 
+    public Stamp() {
+    }
+
+    public Stamp(Long id, String name, String country, Integer yearOfIssue, Set<Denomination> denominations) {
+        this.id = id;
+        this.name = name;
+        this.country = country;
+        this.yearOfIssue = yearOfIssue;
+        this.denominations = denominations;
+    }
+
     public Long getId() {
         return id;
     }

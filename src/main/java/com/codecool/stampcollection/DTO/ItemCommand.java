@@ -16,6 +16,16 @@ public class ItemCommand {
     @NotNull
     private Long transactionId;
 
+    public ItemCommand() {
+    }
+
+    public ItemCommand(Long denominationId, Long quantity, Double unitPrice, Long transactionId) {
+        this.denominationId = denominationId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.transactionId = transactionId;
+    }
+
     public Long getDenominationId() {
         return denominationId;
     }

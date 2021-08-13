@@ -16,6 +16,15 @@ public class DenominationCommand {
     @NotNull
     private Long stampId;
 
+    public DenominationCommand() {
+    }
+
+    public DenominationCommand(Double value, String currency, Long stampId) {
+        this.value = value;
+        this.currency = currency;
+        this.stampId = stampId;
+    }
+
     public Double getValue() {
         return value;
     }

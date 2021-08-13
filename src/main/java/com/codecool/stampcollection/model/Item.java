@@ -19,6 +19,17 @@ public class Item {
     @ManyToOne
     private Transaction transaction;
 
+    public Item() {
+    }
+
+    public Item(Long id, Denomination denomination, Long quantity, Double unitPrice, Transaction transaction) {
+        this.id = id;
+        this.denomination = denomination;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.transaction = transaction;
+    }
+
     public Long getId() {
         return id;
     }

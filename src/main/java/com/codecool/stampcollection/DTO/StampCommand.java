@@ -15,6 +15,15 @@ public class StampCommand {
     @YearOfIssueConstraint(message = "Year of issue must be between 1840 and current year.")
     private Integer yearOfIssue;
 
+    public StampCommand() {
+    }
+
+    public StampCommand(String name, String country, Integer yearOfIssue) {
+        this.name = name;
+        this.country = country;
+        this.yearOfIssue = yearOfIssue;
+    }
+
     public String getName() {
         return name;
     }

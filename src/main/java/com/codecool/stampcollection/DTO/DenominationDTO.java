@@ -14,6 +14,17 @@ public class DenominationDTO {
     private Long stampId;
     private Long stock;
 
+    public DenominationDTO() {
+    }
+
+    public DenominationDTO(Long id, Double value, Currency currency, Long stampId, Long stock) {
+        this.id = id;
+        this.value = value;
+        this.currency = currency;
+        this.stampId = stampId;
+        this.stock = stock;
+    }
+
     public Long getId() {
         return id;
     }
