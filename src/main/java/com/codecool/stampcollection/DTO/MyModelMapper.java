@@ -1,7 +1,9 @@
 package com.codecool.stampcollection.DTO;
 
 import com.codecool.stampcollection.model.*;
+import com.codecool.stampcollection.service.DenominationService;
 import com.codecool.stampcollection.service.StampService;
+import com.codecool.stampcollection.service.TransactionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +16,14 @@ public class MyModelMapper {
 
     private final ModelMapper modelMapper;
     private final StampService stampService;
+    private final DenominationService denominationService;
+    private final TransactionService transactionService;
 
-    public MyModelMapper(ModelMapper modelMapper, StampService stampService) {
+    public MyModelMapper(ModelMapper modelMapper, StampService stampService, DenominationService denominationService, TransactionService transactionService) {
         this.modelMapper = modelMapper;
         this.stampService = stampService;
+        this.denominationService = denominationService;
+        this.transactionService = transactionService;
     }
 
     public StampDTO entityToDto(Stamp stamp) {
@@ -64,7 +70,13 @@ public class MyModelMapper {
     }
 
     public Item dtoToEntity(ItemCommand command) {
-        Item item = modelMapper.map(command, Item.class);
+        Item item = new Item();
+        item.setQuantity(command.getQuantity());
+        item.setUnitPrice(command.getUnitPrice());
+        Denomination denomination = denominationService.findById(command.getDenominationId());
+        Transaction transaction = transactionService.findById(command.getTransactionId());
+        item.setDenomination(denomination);
+        item.setTransaction(transaction);
         return item;
     }
 }

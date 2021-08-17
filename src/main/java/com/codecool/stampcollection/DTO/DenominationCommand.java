@@ -10,7 +10,6 @@ public class DenominationCommand {
     @Positive
     @NotNull
     private Double value;
-    @NotNull
     @CurrencyConstraint(message = "Use three-letter currency codes")
     private String currency;
     @NotNull
