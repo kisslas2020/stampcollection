@@ -10,6 +10,9 @@ public class TransactionTypeValidator implements ConstraintValidator<Transaction
 
     @Override
     public boolean isValid(String transactionType, ConstraintValidatorContext constraintValidatorContext) {
+        if (transactionType == null) {
+            return false;
+        }
         return Arrays.stream(TransactionType.values())
                 .anyMatch(type -> type.getName().equals(transactionType));
     }

@@ -3,7 +3,6 @@ package com.codecool.stampcollection.DTO;
 import com.codecool.stampcollection.validator.TransactionTypeConstraint;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
@@ -16,7 +15,6 @@ public class TransactionCommand {
     private LocalDate dateOfTransaction;
 
     @ApiModelProperty
-    @NotNull
     @TransactionTypeConstraint
     private String transactionType;
 

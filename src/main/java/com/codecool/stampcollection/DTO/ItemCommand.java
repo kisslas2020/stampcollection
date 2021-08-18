@@ -5,15 +5,15 @@ import javax.validation.constraints.Positive;
 
 public class ItemCommand {
 
-    @NotNull
+    @NotNull(message = "Denomination id must not be null")
     private Long denominationId;
-    @Positive
-    @NotNull
+    @Positive(message = "Quantity must be greater than 0")
+    @NotNull(message = "Quantity must not be null")
     private Long quantity;
-    @Positive
-    @NotNull
+    @Positive(message = "Unit price must be greater than 0")
+    @NotNull(message = "Unit price must not be null")
     private Double unitPrice;
-    @NotNull
+    @NotNull(message = "Transaction id must not be null")
     private Long transactionId;
 
     public ItemCommand() {
