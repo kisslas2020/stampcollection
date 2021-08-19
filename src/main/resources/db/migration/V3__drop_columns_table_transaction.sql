@@ -1,5 +1,14 @@
 ALTER TABLE transaction
-    DROP COLUMN denomination_id, quantity, unit_price;
+DROP COLUMN
+    denomination_id;
+
+ALTER TABLE transaction
+DROP COLUMN
+    quantity;
+
+ALTER TABLE transaction
+DROP COLUMN
+    unit_price;
 
 CREATE TABLE item (
     id serial PRIMARY KEY,
