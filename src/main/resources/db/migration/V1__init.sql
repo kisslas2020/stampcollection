@@ -1,11 +1,11 @@
 CREATE TABLE stamp (
-    id serial PRIMARY KEY,
+    id bigserial PRIMARY KEY,
     name varchar(255),
     year_of_issue integer
 );
 
 CREATE TABLE denomination (
-    id serial PRIMARY KEY,
+    id bigserial PRIMARY KEY,
     currency varchar(3),
     stock bigint,
     value double precision,
@@ -18,7 +18,7 @@ ALTER TABLE denomination
     ON DELETE SET NULL;
 
 CREATE TABLE transaction (
-    id serial PRIMARY KEY,
+    id bigserial PRIMARY KEY,
     date_of_transaction date,
     denomination_id bigint,
     quantity bigint,

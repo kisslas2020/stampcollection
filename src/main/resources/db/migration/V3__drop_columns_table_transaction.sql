@@ -11,7 +11,7 @@ DROP COLUMN
     unit_price;
 
 CREATE TABLE item (
-    id serial PRIMARY KEY,
+    id bigserial PRIMARY KEY,
     denomination_id bigint,
     quantity bigint,
     unit_price double precision,
