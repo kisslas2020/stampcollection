@@ -1,6 +1,6 @@
 **Stamp Collection**
 
-This is a program designed to register a collection of stamps.
+This is an application designed to register a collection of stamps.
 
 It contains four models:
 
