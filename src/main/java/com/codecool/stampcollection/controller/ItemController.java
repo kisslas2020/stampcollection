@@ -12,6 +12,8 @@ import com.codecool.stampcollection.service.ItemService;
 import com.codecool.stampcollection.service.TransactionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,8 @@ public class ItemController {
     private final MyModelMapper myModelMapper;
     private final TransactionService transactionService;
 
+    private static final Logger log = LoggerFactory.getLogger(ItemController.class);
+
     public ItemController(ItemService service, DenominationService denominationService, ItemModelAssembler assembler,
                           MyModelMapper myModelMapper, TransactionService transactionService) {
         this.service = service;
@@ -44,12 +48,14 @@ public class ItemController {
     @ApiOperation(value = "View details of the selected item of a transaction")
     @GetMapping("/{item_id}")
     public EntityModel<ItemDTO> findById(@PathVariable("item_id") Long id) {
+        log.info("GET request for querying the item with id: {}", id);
         return assembler.toModel(service.findById(id));
     }
 
     @ApiOperation(value = "View a list of items of all transactions")
     @GetMapping
     public CollectionModel<EntityModel<ItemDTO>> findAll() {
+        log.info("GET request for querying all items in database");
         return assembler.toCollectionModel(service.findAll());
     }
 
@@ -57,6 +63,9 @@ public class ItemController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<ItemDTO> addNew(@Valid @RequestBody ItemCommand command) {
+        log.info("POST request for creating new item with denomination id: {}, quantity: {}, unit price: {} " +
+                "and transaction id: {}", command.getDenominationId(), command.getQuantity(), command.getUnitPrice(),
+                command.getTransactionId());
         Item item = myModelMapper.dtoToEntity(command);
         return assembler.toModel(service.addNew(item));
     }
@@ -64,6 +73,9 @@ public class ItemController {
     @ApiOperation(value = "Update an existing item")
     @PutMapping("/{item_id}")
     public EntityModel<ItemDTO> update(@PathVariable("item_id") Long id, @Valid @RequestBody ItemCommand command) {
+        log.info("PUT request for updating item originally dennomination id: {}, quantity: {}, unit price: {} " +
+                        "and transaction id: {}", command.getDenominationId(), command.getQuantity(),
+                command.getUnitPrice(), command.getTransactionId());
         Item item = service.findById(id);
         item.setQuantity(command.getQuantity());
         item.setUnitPrice(command.getUnitPrice());
@@ -79,6 +91,7 @@ public class ItemController {
     @DeleteMapping("/{item_id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable("item_id") Long id) {
+        log.info("Delete request for deleting the item with id: {}", id);
         service.deleteById(id);
     }
 
