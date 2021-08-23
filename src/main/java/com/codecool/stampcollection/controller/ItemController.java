@@ -73,10 +73,10 @@ public class ItemController {
     @ApiOperation(value = "Update an existing item")
     @PutMapping("/{item_id}")
     public EntityModel<ItemDTO> update(@PathVariable("item_id") Long id, @Valid @RequestBody ItemCommand command) {
-        log.info("PUT request for updating item originally dennomination id: {}, quantity: {}, unit price: {} " +
-                        "and transaction id: {}", command.getDenominationId(), command.getQuantity(),
-                command.getUnitPrice(), command.getTransactionId());
         Item item = service.findById(id);
+        log.info("PUT request for updating item originally denomination id: {}, quantity: {}, unit price: {} " +
+                        "and transaction id: {}", item.getDenomination().getId(), item.getQuantity(),
+                item.getUnitPrice(), item.getTransaction().getId());
         item.setQuantity(command.getQuantity());
         item.setUnitPrice(command.getUnitPrice());
         Denomination denomination = denominationService.findById(command.getDenominationId());

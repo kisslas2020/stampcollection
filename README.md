@@ -45,7 +45,7 @@ Field validations:
 The program has a Dockerfile and a docker-compose.yml file.
 
 The program also includes tests:
-* utit tests (controller and service package)
+* utit tests (controller and service packages)
 * integration tests for testing the controller (webmvctests package)
 * integration tests for testing the custom jpa queries (jpaqueriestests package)
 * integration tests without container (webapplicationtets package)
@@ -53,5 +53,5 @@ The program also includes tests:
 
 Database:
 * the application uses postgresql and flyway, tables are validated by jpa
-* the tests uses h2 and flywayand tables are validated by jpa, except httprequesttests: it uses empty h2 database and tables are created by jpa
+* the tests uses h2 and flyway and tables are validated by jpa, except httprequesttests: it uses empty h2 database and tables are created by jpa
 
